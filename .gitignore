@@ -1,0 +1,12 @@
+.vscode\
+-.vscode\launch.json
+-.vscode\tasks.json
+.rpt2_cache
+.env*
+
+node_modules
+
+tmp
+proto
+
+dist
