@@ -11,9 +11,9 @@ Recommended development environment -- [Microsoft VS Code](https://code.visualst
 
 ## Development Guides
 
-* [Coding](./coding)
-* [Building](./building)
-* [Testing](./testing)
-* [Documenting](./documenting)
-* [Versioning](./versioning)
-* [Deployment](./deployment)
+* [Coding](coding.md)
+* [Building](building.md)
+* [Testing](testing.md)
+* [Documenting](documenting.md)
+* [Versioning](versioning.md)
+* [Deployment](deployment.md)

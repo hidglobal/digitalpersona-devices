@@ -6,8 +6,8 @@ smarrtcard readers etc. These devices are not directly accessible from Javascrip
 The `device-access.js` library communicates with the DP DA agent via a secure message channel,
 allowing to implement composite authentication in web pages.
 
-* [Details](./details)
-* [Tutorial](./tutorial)
-* [Examples](./examples)
-* [How-to](./how-to)
-* [Reference](./reference)
+* [Details](details.md)
+* [Tutorial](tutorial.md)
+* [Examples](examples.md)
+* [How-to](how-to.md)
+* [Reference](reference.md)
