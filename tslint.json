@@ -1,0 +1,14 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "one-line": false,
+    "quotemark": false,
+    "max-classes-per-file": false,
+    "curly": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "member-ordering":false,
+    "arrow-parens": false,
+  }
+}

@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "lib": ["dom" ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+
+        "esModuleInterop": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "declaration": false,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noFallthroughCasesInSwitch": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "strictNullChecks": true,
+        "downlevelIteration": true
+    },
+    "exclude": [
+        "node_modules",
+        "src/devices/face",
+        "src/devices/otp",
+        "src/devices/questions",
+        "src/devices/u2f",
+        "src/devices/windowsAuth",
+        "dist"
+    ],
+    "include": [
+        "src"
+    ]
+}

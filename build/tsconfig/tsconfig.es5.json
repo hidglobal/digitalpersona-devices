@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "outDir": "../../dist/es5",
+        "lib": ["dom", "es2015", "es2015.promise" ],
+        "importHelpers": true,
+    }
+}
