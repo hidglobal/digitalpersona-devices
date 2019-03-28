@@ -10,14 +10,23 @@ module.exports = function(config) {
 
   config.set({
     files: [
-      {pattern: 'src/**/*.ts' },
+        {pattern: '@types/WebSdk/*.js'},
+        {pattern: 'src/**/*.ts' }
     ],
     frameworks: ['jasmine', 'karma-typescript'],
     preprocessors: {
         'src/**/*.ts': ['karma-typescript']
     },
     karmaTypescriptConfig: {
-      tsconfig: 'tsconfig.test.json'
+      tsconfig: 'tsconfig.test.json',
+      bundlerOptions: {
+        resolve: {
+            alias: {
+                'WebSdk': '@types/WebSdk/index.js'
+            },
+            extensions: ['.js']
+        }
+    }
     },
     browsers: ['Chrome'],
     customLaunchers: {
