@@ -13,9 +13,9 @@ export class Channel
 
     constructor(channelName: string, options?: WebSdk.WebChannelOptions) {
         this.webChannel = new WebSdk.WebChannelClient(channelName, options);
-        this.webChannel.onConnectionSucceed = this.onConnectionSucceed;
-        this.webChannel.onConnectionFailed = this.onConnectionFailed;
-        this.webChannel.onDataReceivedTxt = this.onDataReceivedTxt;
+        this.webChannel.onConnectionSucceed = this.onConnectionSucceed.bind(this);
+        this.webChannel.onConnectionFailed = this.onConnectionFailed.bind(this);
+        this.webChannel.onDataReceivedTxt = this.onDataReceivedTxt.bind(this);
     }
 
     public send(request: Request, timeout?: number): Promise<Response> {
@@ -53,7 +53,7 @@ export class Channel
     private onDataReceivedTxt(data: string): void {
         const message: Message = JSON.parse(Utf8.fromBase64Url(data));
         if (message.Type === MessageType.Response) {
-            const response: Response = JSON.parse(Utf8.fromBase64Url(message.Data));
+            const response: Response = JSON.parse(Utf8.fromBase64Url(message.Data || ""));
             const request = this.findRequest(response);
             if (request !== null) {
                 if (request.timer) {
@@ -64,12 +64,12 @@ export class Channel
                 if (hr > 0x7FFFFFFF)
                     request.reject(new Error(`0x${hr.toString(16)}`));
                 else
-                    request.resolve();
+                    request.resolve(response);
             } else
                 console.log(`Orphaned response: ${message.Type}`);
         }
         else if (message.Type === MessageType.Notification) {
-            const notification = JSON.parse(Utf8.fromBase64Url(message.Data));
+            const notification = JSON.parse(Utf8.fromBase64Url(message.Data || ""));
             if (this.onNotification) try {
                 this.onNotification(notification);
             } catch(e){}

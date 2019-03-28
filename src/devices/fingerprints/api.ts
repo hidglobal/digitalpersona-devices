@@ -32,8 +32,8 @@ export class FingerprintsApi
     constructor(options?: WebSdk.WebChannelOptions) {
         super();
         this.channel = new Channel("fingerprints", options);
-        this.channel.onCommunicationError = this.onConnectionFailed;
-        this.channel.onNotification = this.processNotification;
+        this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
+        this.channel.onNotification = this.processNotification.bind(this);
     }
 
     public enumerateDevices(): Promise<string[]> {
@@ -41,6 +41,7 @@ export class FingerprintsApi
             Method.EnumerateDevices
         )))
         .then(response => {
+            if (!response) return [];
             var deviceList: EnumerateDevicesResponse = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"));
             return JSON.parse(deviceList.DeviceIDs || "[]");
 

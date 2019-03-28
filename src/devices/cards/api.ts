@@ -32,8 +32,8 @@ export class CardsApi
     constructor(options?: WebSdk.WebChannelOptions) {
         super();
         this.channel = new Channel("smartcards", options);
-        this.channel.onCommunicationError = this.onConnectionFailed;
-        this.channel.onNotification = this.processNotification;
+        this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
+        this.channel.onNotification = this.processNotification.bind(this);
     }
 
     public enumerateReaders(): Promise<string[]> {

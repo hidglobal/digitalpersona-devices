@@ -21,7 +21,7 @@ export class WindowsAuthApi
         super();
         this.authService = authService;
         this.channel = new Channel("fingerprints", options);
-        this.channel.onCommunicationError = this.onConnectionFailed;
+        this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
     }
 
     public init(): Promise<IWAData> {
