@@ -1,5 +1,13 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "lib": ["dom", "es2015", "es2015.promise" ],
+      "importHelpers": true,
+      "declaration": false,
+      "emitDeclarationOnly": false,
+},
   "include": [
     "src",
     "test"

@@ -1,5 +1,5 @@
-import { Event } from 'common';
-import { Handler } from 'private';
+import { Event } from '../common';
+import { Handler } from '../private';
 
 export class DeviceEvent extends Event
 {

@@ -1,37 +1,45 @@
 {
-    "compilerOptions": {
-        "lib": ["dom" ],
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "moduleResolution": "node",
-        "baseUrl": "./src",
-
-        "esModuleInterop": true,
-        "removeComments": false,
-        "preserveConstEnums": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "declaration": false,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noFallthroughCasesInSwitch": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "strictNullChecks": true,
-        "downlevelIteration": true
-    },
-    "exclude": [
-        "node_modules",
-        "src/devices/face",
-        "src/devices/otp",
-        "src/devices/questions",
-        "src/devices/u2f",
-        "src/devices/windowsAuth",
-        "dist"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist/typings",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "lib": ["dom", "es2015", "es2015.promise" ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./@types"
     ],
-    "include": [
-        "src"
-    ]
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "*": [ "@types/*" ]
+    },
+
+    "esModuleInterop": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": true,
+    "downlevelIteration": true
+  },
+  "include": [
+    "src",
+    "@types"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/devices/face",
+    "src/devices/otp",
+    "src/devices/questions",
+    "src/devices/u2f",
+    "dist"
+  ]
 }

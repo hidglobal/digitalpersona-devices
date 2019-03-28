@@ -1,4 +1,4 @@
-import { Event } from 'common';
+import { Event } from '../common';
 
 export interface Handler<E> {
     (event: E): any;

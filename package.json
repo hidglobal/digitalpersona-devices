@@ -1,5 +1,5 @@
 {
-  "name": "device-access.js",
+  "name": "@digitalpersona/device-access.js",
   "version": "0.0.1",
   "publishConfig": {
     "registry": "http://localhost:4873"
@@ -32,27 +32,25 @@
     "security questions"
   ],
   "module": "./dist/es5/index.js",
-  "main": "./dist/es5.bundles/access-management.umd.js",
-  "browser": "./dist/es5.bundles/access-management.umd.js",
-  "esnext": "./dist/esnext/index.js",
+  "main": "./dist/es5.bundles/device-access.umd.js",
+  "browser": "./dist/es5.bundles/device-access.umd.js",
   "typings": "./dist/typings/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run tsc-all && npm run rollup-all",
     "tsc": "tsc",
     "tsc-es5": "tsc --p ./build/tsconfig/tsconfig.es5.json",
-    "tsc-esnext": "tsc --p ./build/tsconfig/tsconfig.esnext.json",
-    "tsc-types": "tsc --p ./build/tsconfig/tsconfig.types.json",
-    "tsc-all": "npm run tsc-es5 && npm run tsc-esnext && npm run tsc-types",
+    "tsc-es6": "tsc --p ./build/tsconfig/tsconfig.es6.json",
+    "tsc-all": "npm run tsc-es5 && npm run tsc-es6 && npm run tsc",
     "rollup": "rollup -c rollup.config.js",
     "rollup-min": "rollup -c rollup.config.js --environment minify:true",
     "rollup-ts": "rollup -c ./build/rollup/rollup.config.ts.js",
     "rollup-ts-min": "rollup -c ./build/rollup/rollup.config.ts.js --environment minify:true",
     "rollup-es5": "rollup -c ./build/rollup/rollup.config.es5.js",
     "rollup-es5-min": "rollup -c ./build/rollup/rollup.config.es5.js --environment minify:true",
-    "rollup-esnext": "rollup -c ./build/rollup/rollup.config.esnext.js",
-    "rollup-esnext-min": "rollup -c ./build/rollup/rollup.config.esnext.js --environment minify:true",
-    "rollup-all": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-esnext && npm run rollup-esnext-min",
+    "rollup-es6": "rollup -c ./build/rollup/rollup.config.es6.js",
+    "rollup-es6-min": "rollup -c ./build/rollup/rollup.config.es6.js --environment minify:true",
+    "rollup-all": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
     "test": "karma start",
     "test-browser": "karma start --single-run",
     "test-node": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.js",
@@ -64,15 +62,16 @@
     "test-exclude-uncompressed": "set EXCLUDE_UNCOMPRESSED=true&& karma start",
     "test-node-exclude-uncompressed": "set EXCLUDE_UNCOMPRESSED=true&& ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.js",
     "docs": "typedoc --options ./build/typedoc.config.js ./src",
-    "publish": "npm prune --production && npm publish"
+    "prepublishOnly": "npm run build && npm shrinkwrap"
   },
   "bundledDependencies": [],
   "dependencies": {
     "tslib": "^1.9.3",
-    "@digitalpersona/access-management": "^0.0.3"
+    "@digitalpersona/access-management": "^0.0.6"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.9",
+    "@types/node": "^11.12.0",
     "fetch-mock": "^7.3.1",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",

@@ -6,10 +6,11 @@ export const { minify } = process.env
 export const output = (target, format) => ({
     format,
     extend: true,
-    name: 'dp.accessManagement',
-    file: `dist/${target}.bundles/access-management.${format}${minify ? '.min' : ''}.js`,
+    name: 'dp.deviceAcceess',
+    file: `dist/${target}.bundles/device-access.${format}${minify ? '.min' : ''}.js`,
     globals: {
-      'crypto': 'crypto'
+      '@digitalpersona/access-management': 'dp.accessManagement',
+      'WebSdk': 'WebSdk'
     },
     sourcemap: minify ? false : true
 })
@@ -19,14 +20,5 @@ export const config = {
         node(),
     ]
     .concat(minify ? terser() : []),
-//    external: ['crypto'],
-//   onwarn: (warning) => {
-//     const ignoreWarnings = ['CIRCULAR_DEPENDENCY', 'CIRCULAR', 'THIS_IS_UNDEFINED']
-//     if (ignoreWarnings.some(w => w === warning.code))
-//       return
-//     if (warning.missing === 'alea')
-//       return
-
-//     console.warn(warning.message)
-//   }
+    external: ['@digitalpersona/access-management', 'WebSdk'],
 }

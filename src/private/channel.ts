@@ -1,6 +1,7 @@
 import { Base64Url, Utf8 } from '@digitalpersona/access-management';
 import { Request, Response } from './command';
 import { MessageType, Message } from './messages';
+import 'WebSdk';
 
 export class Channel
 {

@@ -1,4 +1,4 @@
-import { Handler } from 'private';
+import { Handler } from '../private';
 import { CommunicationFailed } from './events';
 
 export interface CommunicationEventSource

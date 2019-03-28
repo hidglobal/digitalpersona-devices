@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "outDir": "../../dist/es6",
+        "importHelpers": true,
+        "declaration": false,
+        "emitDeclarationOnly": false,
+      },
+    "exclude": [
+      "src/**/*.spec.ts"
+    ]
+}

@@ -2,6 +2,7 @@
 // 2. Bundles transpiled ES5 output (./dist/es5) to ES5 UMD and IIFE bundles (./dist/es5-bundled)
 
 //import commonjs from 'rollup-plugin-commonjs';
+import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import { config, output } from './rollup.config.base';
 
@@ -26,6 +27,14 @@ export default {
         typescript({
             tsconfigOverride
         }),
+        babel({
+            "presets": [
+                [ "@babel/env", {
+                    "modules": false
+                }]
+            ],
+            exclude: 'node_modules/**' // only transpile our source code
+        })
         // commonjs({
         //     include: 'node_modules/**'
         // })

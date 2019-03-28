@@ -6,5 +6,8 @@
         "outDir": "../../dist/typings",
         "emitDeclarationOnly": true,
         "declaration": true
-    }
+    },
+    "exclude": [
+      "src/**/*.spec.ts"
+    ]
 }

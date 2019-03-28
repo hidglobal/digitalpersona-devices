@@ -3,11 +3,11 @@
 //import babel from 'rollup-plugin-babel';
 import { config, output } from './rollup.config.base';
 
-const target = "esnext";
+const target = "es6";
 
 export default {
     ...config,
-    input: 'dist/esnext/index.js',
+    input: 'dist/es6/index.js',
     output: {
         ...output(target, "umd"),
     },
