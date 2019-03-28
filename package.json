@@ -1,12 +1,19 @@
 {
   "name": "@digitalpersona/device-access.js",
-  "version": "0.0.1",
+  "globalObject": "dp.deviceAccess",
+  "version": "0.0.3",
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
   "description": "JavaScript Client for DigitalPersona Device Access API",
-  "author": "Andrey Bronnikov",
-  "license": "(c) HID Global 2019. All rights reserved.",
+  "author": "HID Global",
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "Andrey Bronnikov",
+      "email": "andrey.bronnikov@hidgroup.com"
+    }
+  ],
   "keywords": [
     "DigitalPersona",
     "authentication",
@@ -32,42 +39,34 @@
     "security questions"
   ],
   "module": "./dist/es5/index.js",
-  "main": "./dist/es5.bundles/device-access.umd.js",
-  "browser": "./dist/es5.bundles/device-access.umd.js",
+  "main": "./dist/es5.bundles/index.umd.js",
+  "browser": "./dist/es5.bundles/index.umd.js",
+  "es2015": "./dist/es6/index.js",
   "typings": "./dist/typings/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "npm run clean && npm run tsc-all && npm run rollup-all",
+    "build": "npm run clean && npm run tsc-all && npm run rollup",
     "tsc": "tsc",
     "tsc-es5": "tsc --p ./build/tsconfig/tsconfig.es5.json",
     "tsc-es6": "tsc --p ./build/tsconfig/tsconfig.es6.json",
-    "tsc-all": "npm run tsc-es5 && npm run tsc-es6 && npm run tsc",
-    "rollup": "rollup -c rollup.config.js",
-    "rollup-min": "rollup -c rollup.config.js --environment minify:true",
-    "rollup-ts": "rollup -c ./build/rollup/rollup.config.ts.js",
-    "rollup-ts-min": "rollup -c ./build/rollup/rollup.config.ts.js --environment minify:true",
-    "rollup-es5": "rollup -c ./build/rollup/rollup.config.es5.js",
-    "rollup-es5-min": "rollup -c ./build/rollup/rollup.config.es5.js --environment minify:true",
-    "rollup-es6": "rollup -c ./build/rollup/rollup.config.es6.js",
-    "rollup-es6-min": "rollup -c ./build/rollup/rollup.config.es6.js --environment minify:true",
-    "rollup-all": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
+    "tsc-all": "npm run tsc && npm run tsc-es5 && npm run tsc-es6",
+    "rollup-es5": "rollup -c -c rollup.config.js --environment target:es5",
+    "rollup-es5-min": "rollup -c -c rollup.config.js --environment target:es5,minify",
+    "rollup-es6": "rollup -c -c rollup.config.js --environment target:es6",
+    "rollup-es6-min": "rollup -c -c rollup.config.js --environment target:es6,minify",
+    "rollup": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
     "test": "karma start",
-    "test-browser": "karma start --single-run",
-    "test-node": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.js",
-    "test-all": "npm run test-browser && npm run test-node",
+    "test-once": "karma start --single-run",
     "test-private": "set UUT=private&& karma start",
     "test-common": "set UUT=common&& karma start",
     "test-fp": "set UUT=fp&& karma start",
     "test-card": "set UUT=card&& karma start",
-    "test-exclude-uncompressed": "set EXCLUDE_UNCOMPRESSED=true&& karma start",
-    "test-node-exclude-uncompressed": "set EXCLUDE_UNCOMPRESSED=true&& ts-node node_modules/jasmine/bin/jasmine --config=jasmine-node.js",
     "docs": "typedoc --options ./build/typedoc.config.js ./src",
     "prepublishOnly": "npm run build && npm shrinkwrap"
   },
-  "bundledDependencies": [],
   "dependencies": {
     "tslib": "^1.9.3",
-    "@digitalpersona/access-management": "^0.0.6"
+    "@digitalpersona/access-management": "^0.0.9"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.9",
@@ -83,7 +82,6 @@
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
     "rollup": "^1.6.0",
-    "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-typescript2": "^0.20.1",
