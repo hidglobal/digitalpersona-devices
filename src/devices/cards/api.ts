@@ -5,7 +5,7 @@ import { CardInserted, CardRemoved } from './events';
 import { CardsEventSource as CardsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, CardNotification, ReaderList, CardList,  } from "./messages";
 import { CardInfo } from './cards'
-import { Utf8, Base64Url, Base64 } from '@digitalpersona/access-management';
+import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/access-management';
 
 export class CardsApi
     extends MultiCastEventSource
@@ -52,7 +52,8 @@ export class CardsApi
         )))
         .then(response => {
             const list: CardList = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"))
-            return JSON.parse(list.Cards || "[]");
+            const cards: string[] = JSON.parse(list.Cards || "[]");
+            return cards.map(s => JSON.parse(Utf16.fromBase64Url(s)));
         });
     }
 
