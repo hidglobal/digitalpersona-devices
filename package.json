@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "tslib": "^1.9.3",
+    "u2f-api": "^1.0.10",
     "@digitalpersona/access-management": "^0.0.9"
   },
   "devDependencies": {

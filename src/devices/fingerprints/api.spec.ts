@@ -22,4 +22,7 @@ describe("FingerprintsApi: ", () => {
         expect(info!.eUidType).toBeDefined();
     })
 
+    it("must fail", async ()=>{
+        expectAsync(api.getDeviceInfo("NonexistentID")).toBeRejected();
+    })
 })

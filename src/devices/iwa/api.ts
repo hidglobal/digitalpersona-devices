@@ -1,9 +1,9 @@
-﻿import { Credential, JSONWebToken, IAuthService, AuthenticationStatus } from '@digitalpersona/access-management';
+﻿import { Credential, JSONWebToken, IAuthService, AuthenticationStatus, Base64UrlString } from '@digitalpersona/access-management';
 import { Handler, MultiCastEventSource, Command, Request, Channel } from '../../private';
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
 import { Method } from './messages';
 import { IWAData } from './data';
-import { AuthenticationContext } from './workflow';
+import { AuthenticationContext, AuthenticationData } from '../../private/workflow';
 
 export class WindowsAuthApi
     extends MultiCastEventSource
@@ -24,35 +24,6 @@ export class WindowsAuthApi
         this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
     }
 
-    public init(): Promise<IWAData> {
-        return this.channel.send(new Request(new Command(
-            Method.Init
-        )), 3000)
-        .then(response => {
-            var data: IWAData = JSON.parse(response.Data || "{}");
-            return data;
-        });
-    }
-
-    public continue(handle: number, data: string): Promise<IWAData> {
-        return this.channel.send(new Request(new Command(
-            Method.Continue,
-            JSON.stringify({ Handle: handle, Data: data})
-        )))
-        .then(response => {
-            var data: IWAData = JSON.parse(response.Data || "{}");
-            return data;
-        });
-    }
-
-    public term(handle: number): Promise<void> {
-        return this.channel.send(new Request(new Command(
-            Method.Term,
-            JSON.stringify({ Handle: handle })
-        )))
-        .then(() => {});
-    }
-
     public authenticate(): Promise<JSONWebToken> {
         const _this = this;
 
@@ -61,30 +32,30 @@ export class WindowsAuthApi
         // Note that for a proper cleanup sequence the promise must always succeed and never be rejected!
         // The error must be passed to the caller in the `result` property of the `context` (see `.withError()`)
         // and must be extracted and thrown by the caller.
-        const nextStep = (contex: AuthenticationContext): Promise<AuthenticationContext> =>
+        const nextStep = (context: AuthenticationContext): Promise<AuthenticationContext> =>
         {
-            if (contex.result) {
-                if (context.clientHandle) _this.term(contex.clientHandle);                                  // ignore the outcome
+            if (context.result) {
+                if (context.clientHandle) _this.term(context.clientHandle);                                 // ignore the outcome
                 if (context.serverHandle) _this.authService.DestroyAuthentication(context.serverHandle);    // ignore the outcome
                 return Promise.resolve(context);    // must always resolve, even on error
             }
 
-            if (contex.attempts <= 0)
+            if (context.attempts <= 0)
                 nextStep(context.withError(new Error("Authentication stalled")));
 
-            if (!contex.serverHandle)   // init on server
-                return _this.authService.CreateUserAuthentication(null, Credential.IWA)
+            if (!context.serverHandle)   // init on server
+                return _this.authService.CreateUserAuthentication(context.user, context.credentialId)
                     .then(handle => nextStep(context.withServerHandle(handle)));
 
-            if (!contex.clientHandle)   // init on client
+            if (!context.clientHandle)   // init on client
                 return _this.init()
-                    .then(result => nextStep(context.withIWAData(result)));
+                    .then(data => nextStep(context.withClientHandle(data.handle).withClientData(data.data)));
 
-            if (!contex.clientData && contex.serverData)    // continue on client
-                return _this.continue(contex.clientHandle, contex.serverData)
-                    .then(result => nextStep(context.withIWAData(result)));
+            if (!context.clientData && context.serverData)    // continue on client
+                return _this.continue(context.clientHandle, context.serverData)
+                    .then(clientData => nextStep(context.withClientData(clientData)));
 
-            if (!contex.serverData && context.clientData) { // continue on server
+            if (!context.serverData && context.clientData) { // continue on server
                 return _this.authService
                     .ContinueAuthentication(context.serverHandle, context.clientData)
                     .then(result => {
@@ -102,7 +73,7 @@ export class WindowsAuthApi
         }
 
         // Start the workflow and extract a token (or throw an error) when ready.
-        let context = new AuthenticationContext();
+        let context = new AuthenticationContext(Credential.IWA, null);
         return nextStep(context).then(context => {
             if (context.result instanceof Error)
                 throw context.result;
@@ -113,5 +84,35 @@ export class WindowsAuthApi
     private onConnectionFailed(): void {
         this.emit(new CommunicationFailed());
     }
+
+    private init(): Promise<AuthenticationData> {
+        return this.channel.send(new Request(new Command(
+            Method.Init
+        )), 3000)
+        .then(response => {
+            var data: IWAData = JSON.parse(response.Data || "{}");
+            return { handle: data.Handle, data: data.Data };
+        });
+    }
+
+    private continue(handle: number, data: string): Promise<Base64UrlString> {
+        return this.channel.send(new Request(new Command(
+            Method.Continue,
+            JSON.stringify({ Handle: handle, Data: data})
+        )))
+        .then(response => {
+            var data: IWAData = JSON.parse(response.Data || "{}");
+            return data.Data;
+        });
+    }
+
+    private term(handle: number): Promise<void> {
+        return this.channel.send(new Request(new Command(
+            Method.Term,
+            JSON.stringify({ Handle: handle })
+        )))
+        .then(() => {});
+    }
+
 }
 

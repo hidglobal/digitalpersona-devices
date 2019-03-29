@@ -39,7 +39,6 @@
     "src/devices/face",
     "src/devices/otp",
     "src/devices/questions",
-    "src/devices/u2f",
     "dist"
   ]
 }

@@ -1,5 +1,21 @@
-import { JSONWebToken, AuthenticationHandle } from '@digitalpersona/access-management';
-import { IWAData } from './data';
+import { JSONWebToken, AuthenticationHandle, User, CredentialId } from '@digitalpersona/access-management';
+
+export class AuthenticationData
+{
+    public readonly handle: number;
+    public readonly data: string;
+}
+
+export enum AuthenticationStep
+{
+    InitClient,
+    InitServer,
+    ContinueClient,
+    ContinueServer,
+    Done,
+    AttemptsDepleted,
+    Error
+}
 
 // Holds intermediate authentication workflow data.
 // The authentication workflow essentially is a sequence of steps,
@@ -12,6 +28,8 @@ import { IWAData } from './data';
 // Invariant: serverData and clientData must be never not-null at the same time
 // (except on error).
 export class AuthenticationContext {
+    public readonly user: User|null;
+    public readonly credentialId: CredentialId;
     public attempts: number;
     public serverHandle: AuthenticationHandle = 0;
     public clientHandle: AuthenticationHandle = 0;
@@ -19,17 +37,31 @@ export class AuthenticationContext {
     public clientData?: string|null;
     public result?: JSONWebToken | Error;
 
-    constructor(attempts: number = 3) {
+    constructor(credential: CredentialId, user: User|null, attempts: number = 3) {
+        this.user = user;
+        this.credentialId = credential;
         this.attempts = attempts
+    }
+
+    public nextStep() {
+        return  (this.result)                           ? AuthenticationStep.Done :
+                (this.attempts <= 0)                    ? AuthenticationStep.AttemptsDepleted :
+                (!this.serverHandle)                    ? AuthenticationStep.InitServer :
+                (!this.clientHandle)                    ? AuthenticationStep.InitClient :
+                (!this.clientData && this.serverData)   ? AuthenticationStep.ContinueClient :
+                (!this.serverData && this.clientData)   ? AuthenticationStep.ContinueServer :
+            AuthenticationStep.Error;
+    }
+
+    public withClientHandle(handle: AuthenticationHandle): this {
+        this.clientHandle = handle;
+        this.serverData = null;
+        return this;
     }
     public withServerHandle(handle: AuthenticationHandle): this {
         this.serverHandle = handle;
         this.clientData = null;
         return this;
-    }
-    public withIWAData(iwa: IWAData): this {
-        this.clientData = iwa.Data;
-        return this.withClientData(iwa.Data);
     }
     public withServerData(data?: string): this {
         this.serverData = data;
