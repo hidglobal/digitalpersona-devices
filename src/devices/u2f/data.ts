@@ -27,14 +27,15 @@ export class ClientData
 
 export const enum HandshakeType
 {
-    Init = 0,
-    SignRequest = 1,
-    SignResponse = 2
+    ChallengeRequest = 0,
+    ChallengeResponse = 1,
+    AuthenticationRequest = 2,
+    AuthenticationResponse = 3
 }
 
 
 export class HandshakeData
 {
-    public handshakeType: HandshakeType = HandshakeType.Init ;
+    public handshakeType: HandshakeType = HandshakeType.ChallengeRequest ;
     public handshakeData: string|null;
 }
