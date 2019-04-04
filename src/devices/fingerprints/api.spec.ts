@@ -4,7 +4,7 @@ describe("FingerprintsApi: ", () => {
 
     let api: FingerprintsApi;
     beforeEach(()=>{
-        api = new FingerprintsApi();
+        api = new FingerprintsApi(new WebSdk.WebChannelOptions({debug: true, reconnectAlways: true }));
     })
 
     it("must enumerate devices", async ()=>{

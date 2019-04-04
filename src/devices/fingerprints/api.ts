@@ -44,8 +44,7 @@ export class FingerprintsApi
             if (!response) return [];
             var deviceList: EnumerateDevicesResponse = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"));
             return JSON.parse(deviceList.DeviceIDs || "[]");
-
-        });
+        })
     }
 
     public getDeviceInfo(deviceUid: string): Promise<DeviceInfo|null> {
@@ -56,7 +55,7 @@ export class FingerprintsApi
         .then(response => {
             var deviceInfo: DeviceInfo = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
             return deviceInfo;
-        });
+        })
     }
 
     public startAcquisition(sampleFormat: SampleFormat, deviceUid?: string): Promise<void> {
