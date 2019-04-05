@@ -1,4 +1,4 @@
-import { JSONWebToken, AuthenticationHandle, AuthenticationStatus, User, CredentialId, Base64UrlString, Base64Url, IAuthService } from '@digitalpersona/access-management';
+import { JSONWebToken, Ticket, AuthenticationHandle, AuthenticationStatus, User, Credential, CredentialId, Base64UrlString, Base64Url, IAuthService } from '@digitalpersona/access-management';
 
 export class AuthenticationData
 {
@@ -13,17 +13,27 @@ export interface IAuthenticationClient
 }
 
 export function authenticate(
-    user: User|null,
-    credentialId: CredentialId,
-    client: IAuthenticationClient,
-    server: IAuthService
+    identity: User | JSONWebToken | null,
+    credential: Credential | CredentialId,
+    server: IAuthService,
+    client?: IAuthenticationClient,
 ): Promise<JSONWebToken>
 {
+    // When credential data are present, use a direct authentication flow
+    if (credential instanceof Credential) {
+        if (!identity) identity = "*";
+        return (identity instanceof User
+            ? server.AuthenticateUser(identity, credential)
+            : server.AuthenticateTicket(new Ticket(identity), credential))
+        .then(ticket => ticket.jwt);
+    }
+
+    // When no credential data are present, use a challenge-response authentication flow
+    if (!client)
+        return Promise.reject(new Error("Client"))
+
     // Performs one step in an authentication workflow and recursively calls itself for a next step.
     // The workflow finishes when a token obtained, or an error produced.
-    // Note that for a proper cleanup sequence the promise must always succeed and never be rejected!
-    // The error must be passed to the caller in the `result` property of the `context` (see `.withError()`)
-    // and must be extracted and thrown by the caller.
     const nextStep = (context: AuthenticationContext): Promise<JSONWebToken> =>
     {
         switch(context.nextStep())
@@ -32,8 +42,10 @@ export function authenticate(
                 .init()
                 .then(data => nextStep(context.withClientHandle(data.handle).withClientData(data.data)));
             }
-            case AuthenticationStep.InitServer: { return server
-                .CreateUserAuthentication(context.user, context.credentialId)
+            case AuthenticationStep.InitServer: {
+                return ((identity === null) || (identity instanceof User)
+                    ? server.CreateUserAuthentication(identity, credential)
+                    : server.CreateTicketAuthentication(new Ticket(identity), credential))
                 .then(handle => nextStep(context.withServerHandle(handle)));
             }
             case AuthenticationStep.ContinueClient: { return client
@@ -59,7 +71,7 @@ export function authenticate(
     }
 
     // Start the workflow and extract a token (or throw an error) when ready.
-    let context = new AuthenticationContext(credentialId, user);
+    let context = new AuthenticationContext();
     return nextStep(context)
     .catch(err => {
          return Promise.reject(err)     // somehow exception thrown inside u2fApi does not automatically reject the promise, so forcing this here
@@ -79,7 +91,7 @@ export enum AuthenticationStep
     ContinueServer,
 }
 
-// Holds intermediate authentication workflow data.
+// Holds intermediate authentication workflow data and ensures workflow invariantss.
 // The authentication workflow essentially is a sequence of steps,
 // where each step passes authentication data either from the client to the server,
 // or from server to the client.
@@ -90,17 +102,13 @@ export enum AuthenticationStep
 // Invariant: serverData and clientData must be never not-null at the same time
 // (except on error).
 export class AuthenticationContext {
-    public readonly user: User|null;
-    public readonly credentialId: CredentialId;
     public maxRounds: number;
     public serverHandle: AuthenticationHandle = 0;
     public clientHandle: AuthenticationHandle = 0;
     public serverData?: string|null;
     public clientData?: string|null;
 
-    constructor(credential: CredentialId, user: User|null, maxRounds: number = 3) {
-        this.user = user;
-        this.credentialId = credential;
+    constructor(maxRounds: number = 3) {
         this.maxRounds = maxRounds
     }
 

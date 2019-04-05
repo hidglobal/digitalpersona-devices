@@ -1,3 +1,4 @@
+export * from './data';
 export * from './device';
 export * from './sample';
 export * from './events';

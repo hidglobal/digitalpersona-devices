@@ -23,7 +23,7 @@ export class U2F
     public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
 
     public authenticate(user: User): Promise<JSONWebToken> {
-        return authenticate(user, Credential.U2F, this.impl, this.authService);
+        return authenticate(user, Credential.U2F, this.authService, this.impl);
     }
 }
 

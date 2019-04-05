@@ -1,10 +1,14 @@
 import { FingerprintsApi } from './api';
+import { User, AuthService } from '@digitalpersona/access-management';
 
 describe("FingerprintsApi: ", () => {
 
     let api: FingerprintsApi;
     beforeEach(()=>{
-        api = new FingerprintsApi(new WebSdk.WebChannelOptions({debug: true, reconnectAlways: true }));
+        api = new FingerprintsApi(
+            new WebSdk.WebChannelOptions({debug: false, reconnectAlways: true }),
+            new AuthService("https://websvr-12-64.alpha.local/DPWebAuth/DPWebAuthService.svc")
+        );
     })
 
     it("must enumerate devices", async ()=>{
@@ -24,5 +28,10 @@ describe("FingerprintsApi: ", () => {
 
     it("must fail", async ()=>{
         expectAsync(api.getDeviceInfo("NonexistentID")).toBeRejected();
+    })
+
+    it("must get enrolled fingers", async() => {
+        const fingers = await api.getEnrollmentData(new User("alpha\\administrator"));
+        expect(fingers.length).toBeGreaterThan(0);
     })
 })

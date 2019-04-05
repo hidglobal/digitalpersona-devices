@@ -1,17 +1,18 @@
-﻿import { Handler, MultiCastEventSource, Command, Request, Channel } from '../../private';
+﻿import { Handler, MultiCastEventSource, Command, Request, Channel, authenticate } from '../../private';
 import { Event, CommunicationFailed, CommunicationEventSource } from '../../common';
 import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events';
 import { CardInserted, CardRemoved } from './events';
 import { CardsEventSource as CardsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, CardNotification, ReaderList, CardList,  } from "./messages";
-import { CardInfo } from './cards'
-import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/access-management';
+import { CardInfo, CardType } from './cards'
+import { User, Utf8, Base64Url, Base64, Utf16, Credential, IAuthService, JSONWebToken } from '@digitalpersona/access-management';
 
 export class CardsApi
     extends MultiCastEventSource
     implements CommunicationEventSource, DeviceEventSource, CardsEventSource
 {
-    private channel: Channel;
+    private readonly channel: Channel;
+    private readonly server?: IAuthService;
 
     public onDeviceConnected: Handler<DeviceConnected>;
     public onDeviceDisconnected: Handler<DeviceDisconnected>;
@@ -29,11 +30,36 @@ export class CardsApi
     public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
     public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
 
-    constructor(options?: WebSdk.WebChannelOptions) {
+    constructor(options?: WebSdk.WebChannelOptions, server?: IAuthService) {
         super();
         this.channel = new Channel("smartcards", options);
         this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
         this.channel.onNotification = this.processNotification.bind(this);
+        this.server = server;
+    }
+
+    // Authenticates the user using the card.
+    // For contactless/proximity cards this method is usually called on tap (from the onCardInserted event handler).
+    // For smart cards this method is usually called when the user types and submits a PIN.
+    public authenticate(user: User, reader: string, pin?: string): Promise<JSONWebToken>
+    {
+        if (!this.server)
+            return Promise.reject(new Error("Server"));
+        return this
+            .getCardInfo(reader)
+            .then(info => {
+                if (!info)
+                    return Promise.reject(new Error("Card is not enrolled"));
+                const credId =
+                    (info.Type === CardType.Contactless) ? Credential.ContactlesCard :
+                    (info.Type === CardType.Proximity) ? Credential.ProximityCard :
+                    (info.Type === CardType.Contact) ? Credential.SmartCard :
+                    (()=>{throw new Error("Unsupporter card type")})();
+
+                return this
+                    .getCardAuthData(reader, pin)
+                    .then(data => authenticate(user, new Credential(credId, data), this.server!));
+            })
     }
 
     public enumerateReaders(): Promise<string[]> {

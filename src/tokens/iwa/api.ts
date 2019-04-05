@@ -26,7 +26,7 @@ export class WindowsAuthApi
     }
 
     public authenticate(): Promise<JSONWebToken> {
-        return authenticate(null, Credential.IWA, this.impl, this.authService);
+        return authenticate(null, Credential.IWA, this.authService, this.impl);
     }
 
     private onConnectionFailed(): void {

@@ -1,4 +1,4 @@
-﻿import { Base64Url, Utf8 } from '@digitalpersona/access-management';
+﻿import { User, Base64Url, Utf8, IAuthService, JSONWebToken, Credential } from '@digitalpersona/access-management';
 import { Handler, MultiCastEventSource, Command, Request, Channel } from '../../private';
 import { CommunicationFailed, CommunicationEventSource } from '../../common';
 import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events'
@@ -10,12 +10,14 @@ import { FingerprintsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, EnumerateDevicesResponse, Completed, Error, Quality } from './messages';
 import { DeviceInfo } from './device';
 import { SampleFormat } from './sample';
+import { FingerEnrollment, FingerEnrollmentData } from './data';
 
 export class FingerprintsApi
     extends MultiCastEventSource
     implements FingerprintsEventSource, DeviceEventSource, CommunicationEventSource
 {
-    private channel: Channel;
+    private readonly channel: Channel;
+    private readonly server?: IAuthService;
 
     public onDeviceConnected: Handler<DeviceConnected>;
     public onDeviceDisconnected: Handler<DeviceDisconnected>;
@@ -29,15 +31,45 @@ export class FingerprintsApi
     public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
     public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
 
-    constructor(options?: WebSdk.WebChannelOptions) {
+    constructor(options?: WebSdk.WebChannelOptions, server?: IAuthService) {
         super();
         this.channel = new Channel("fingerprints", options);
         this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
         this.channel.onNotification = this.processNotification.bind(this);
+        this.server = server;
+    }
+
+    // Authenticates the user and returns a JSON Web Token.
+    // Call this method when the fingerprint reader captures a biometric sample
+    public authenticate(user: User, data: SamplesAcquired): Promise<JSONWebToken> {
+        if (!this.server)
+            return Promise.reject(new Error("Server"));
+        return this.server
+            .AuthenticateUser(user, new Credential(Credential.Fingerprints, Base64Url.fromUtf8(data.samples)))
+            .then(ticket => ticket.jwt);
+    }
+
+    public identiy(data: SamplesAcquired): Promise<JSONWebToken> {
+        if (!this.server)
+            return Promise.reject(new Error("Server"));
+        return this.server
+            .IdentifyUser(new Credential(Credential.Fingerprints, Base64Url.fromUtf8(data.samples)))
+            .then(ticket => ticket.jwt);
+    }
+
+    public getEnrollmentData(user: User): Promise<FingerEnrollmentData>
+    {
+        if (!this.server)
+            return Promise.reject(new Error("Server"));
+        return this.server
+            .GetEnrollmentData(user, Credential.Fingerprints)
+            .then(data =>
+                (JSON.parse(Utf8.fromBase64Url(data)) as object[]).map(item => FingerEnrollment.fromJson(item))
+            );
     }
 
     public enumerateDevices(): Promise<string[]> {
-        return this.channel.send(new Request( new Command(
+        return this.channel.send(new Request(new Command(
             Method.EnumerateDevices
         )))
         .then(response => {
@@ -69,7 +101,7 @@ export class FingerprintsApi
         .then(() => {});
     }
 
-    stopAcquisition(deviceUid?: string): Promise<void> {
+    public stopAcquisition(deviceUid?: string): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.StopAcquisition,
             Base64Url.fromUtf16(JSON.stringify({
