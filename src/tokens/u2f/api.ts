@@ -37,12 +37,23 @@ export class U2FApi
         return authenticate(user, Credential.U2F, this.authService, this.impl);
     }
 
+    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.IsEnrollmentAllowed(
+            new Ticket(securityOfficer || this.securityOfficer || ""),
+            user,
+            Credential.U2F
+        )
+    }
+
     public getAppId(): Promise<string> {
         return this.authService
             .CustomAction(CustomAction.RequestAppId, Ticket.None(), User.Anonymous(), new Credential(Credential.U2F, ""))
             .then(data =>
                 (JSON.parse(data) as U2FAppId).AppId);
     }
+
 
     public enroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
         if (!this.enrollService)

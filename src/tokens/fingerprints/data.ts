@@ -12,7 +12,7 @@ export enum FingerPosition {
     LeftLittle      = 10,
 }
 
-export class FingerEnrollment
+export class Finger
 {
     constructor(
         public readonly position: FingerPosition,
@@ -20,9 +20,9 @@ export class FingerEnrollment
 
     public static fromJson(json: object)
     {
-        const obj = json as FingerEnrollment;
-        return new FingerEnrollment(obj.position);
+        const obj = json as Finger;
+        return new Finger(obj.position);
     }
 }
 
-export type FingerEnrollmentData = FingerEnrollment[];
+export type Fingers = Finger[];

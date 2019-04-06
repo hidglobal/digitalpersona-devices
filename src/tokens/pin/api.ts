@@ -6,7 +6,7 @@ export class PinApi
     constructor(
         private readonly authService: IAuthService,
         private readonly enrollService: IEnrollService,
-        private readonly securityOfficer: JSONWebToken,
+        private readonly securityOfficer?: JSONWebToken,
     ){}
 
     public authenticate(user: User, pin: string): Promise<JSONWebToken> {
@@ -19,7 +19,7 @@ export class PinApi
         if (!this.enrollService)
             return Promise.reject(new Error("enrollService"));
         return this.enrollService.IsEnrollmentAllowed(
-            new Ticket(securityOfficer || this.securityOfficer),
+            new Ticket(securityOfficer || this.securityOfficer || ""),
             user,
             Credential.PIN
         )

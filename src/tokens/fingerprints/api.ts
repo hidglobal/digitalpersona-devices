@@ -10,7 +10,7 @@ import { FingerprintsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, EnumerateDevicesResponse, Completed, Error, Quality } from './messages';
 import { DeviceInfo } from './device';
 import { SampleFormat } from './sample';
-import { FingerEnrollment, FingerEnrollmentData, FingerPosition } from './data';
+import { Finger, Fingers, FingerPosition } from './data';
 import { Fingerprints } from './credential';
 
 export class FingerprintsApi
@@ -61,15 +61,25 @@ export class FingerprintsApi
             .then(ticket => ticket.jwt);
     }
 
-    public getEnrollmentData(user: User): Promise<FingerEnrollmentData>
+    public getEnrolled(user: User): Promise<Fingers>
     {
         if (!this.authService)
             return Promise.reject(new Error("authService"));
         return this.authService
             .GetEnrollmentData(user, Credential.Fingerprints)
             .then(data =>
-                (JSON.parse(Utf8.fromBase64Url(data)) as object[]).map(item => FingerEnrollment.fromJson(item))
+                (JSON.parse(Utf8.fromBase64Url(data)) as object[]).map(item => Finger.fromJson(item))
             );
+    }
+
+    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.IsEnrollmentAllowed(
+            new Ticket(securityOfficer || this.securityOfficer || ""),
+            user,
+            Credential.Fingerprints
+        )
     }
 
     public enroll(user: JSONWebToken, position: FingerPosition, samples: BioSample[], securityOfficer?: JSONWebToken): Promise<void> {

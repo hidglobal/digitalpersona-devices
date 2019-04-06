@@ -26,6 +26,16 @@ export class SecurityQuestionsApi
             this.authService);
     }
 
+    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.IsEnrollmentAllowed(
+            new Ticket(securityOfficer || this.securityOfficer || ""),
+            user,
+            Credential.SecurityQuestions
+        )
+    }
+
     public enroll(user: JSONWebToken, questions: Question[], answers: Answers, securityOfficer?: JSONWebToken): Promise<void>
     {
         if (!this.enrollService)

@@ -1,4 +1,4 @@
-import { User, Ticket, IAuthService, IEnrollService, JSONWebToken } from '@digitalpersona/access-management';
+import { User, Credential, Ticket, IAuthService, IEnrollService, JSONWebToken } from '@digitalpersona/access-management';
 import { CustomAction } from './actions';
 import { Password } from './credential';
 
@@ -14,6 +14,16 @@ export class PasswordApi
         return this.authService
             .AuthenticateUser(user, new Password(password))
             .then(ticket => ticket.jwt);
+    }
+
+    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.IsEnrollmentAllowed(
+            new Ticket(securityOfficer || this.securityOfficer || ""),
+            user,
+            Credential.Password
+        )
     }
 
     enroll(user: JSONWebToken, password: string, oldPassword: string|null = null, securityOfficer?: JSONWebToken): Promise<void> {
