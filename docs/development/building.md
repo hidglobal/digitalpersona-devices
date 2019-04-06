@@ -6,7 +6,7 @@ To get started, install dependencies first:
 
 ```
 cd ./device-access.js
-npm install
+yarn
 ```
 <a name="code"></a>
 ## Build code

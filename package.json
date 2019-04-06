@@ -62,12 +62,12 @@
     "test-fp": "set UUT=fp&& karma start",
     "test-card": "set UUT=card&& karma start",
     "docs": "typedoc --options ./build/typedoc.config.js ./src",
-    "prepublishOnly": "npm run build && npm shrinkwrap"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "tslib": "^1.9.3",
     "u2f-api": "^1.0.10",
-    "@digitalpersona/access-management": "^0.0.9"
+    "@digitalpersona/access-management": "^0.0.11"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.9",
