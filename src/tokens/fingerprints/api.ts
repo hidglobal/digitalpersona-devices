@@ -1,6 +1,6 @@
-﻿import { User, Base64Url, Utf8, IAuthService, JSONWebToken, Credential } from '@digitalpersona/access-management';
+﻿import { User, Base64Url, Utf8, IAuthService, JSONWebToken, Credential, IEnrollService, Ticket } from '@digitalpersona/access-management';
 import { Handler, MultiCastEventSource, Command, Request, Channel } from '../../private';
-import { CommunicationFailed, CommunicationEventSource } from '../../common';
+import { BioSample, CommunicationFailed, CommunicationEventSource } from '../../common';
 import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events'
 import { ErrorOccurred,
     SamplesAcquired, QualityReported,
@@ -10,14 +10,14 @@ import { FingerprintsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, EnumerateDevicesResponse, Completed, Error, Quality } from './messages';
 import { DeviceInfo } from './device';
 import { SampleFormat } from './sample';
-import { FingerEnrollment, FingerEnrollmentData } from './data';
+import { FingerEnrollment, FingerEnrollmentData, FingerPosition } from './data';
+import { Fingerprints } from './credential';
 
 export class FingerprintsApi
     extends MultiCastEventSource
     implements FingerprintsEventSource, DeviceEventSource, CommunicationEventSource
 {
     private readonly channel: Channel;
-    private readonly server?: IAuthService;
 
     public onDeviceConnected: Handler<DeviceConnected>;
     public onDeviceDisconnected: Handler<DeviceDisconnected>;
@@ -31,41 +31,65 @@ export class FingerprintsApi
     public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
     public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
 
-    constructor(options?: WebSdk.WebChannelOptions, server?: IAuthService) {
+    constructor(
+        private readonly authService?: IAuthService,
+        private readonly enrollService?: IEnrollService,
+        private readonly securityOfficer?: JSONWebToken,
+        private readonly options?: WebSdk.WebChannelOptions,
+    ) {
         super();
-        this.channel = new Channel("fingerprints", options);
+        this.channel = new Channel("fingerprints", this.options);
         this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
         this.channel.onNotification = this.processNotification.bind(this);
-        this.server = server;
     }
 
     // Authenticates the user and returns a JSON Web Token.
     // Call this method when the fingerprint reader captures a biometric sample
-    public authenticate(user: User, data: SamplesAcquired): Promise<JSONWebToken> {
-        if (!this.server)
-            return Promise.reject(new Error("Server"));
-        return this.server
-            .AuthenticateUser(user, new Credential(Credential.Fingerprints, Base64Url.fromUtf8(data.samples)))
+    public authenticate(user: User, samples: BioSample[]): Promise<JSONWebToken> {
+        if (!this.authService)
+            return Promise.reject(new Error("authService"));
+        return this.authService
+            .AuthenticateUser(user, new Fingerprints(samples))
             .then(ticket => ticket.jwt);
     }
 
-    public identiy(data: SamplesAcquired): Promise<JSONWebToken> {
-        if (!this.server)
-            return Promise.reject(new Error("Server"));
-        return this.server
-            .IdentifyUser(new Credential(Credential.Fingerprints, Base64Url.fromUtf8(data.samples)))
+    public identify(samples: BioSample[]): Promise<JSONWebToken> {
+        if (!this.authService)
+            return Promise.reject(new Error("authService"));
+        return this.authService
+            .IdentifyUser(new Fingerprints(samples))
             .then(ticket => ticket.jwt);
     }
 
     public getEnrollmentData(user: User): Promise<FingerEnrollmentData>
     {
-        if (!this.server)
-            return Promise.reject(new Error("Server"));
-        return this.server
+        if (!this.authService)
+            return Promise.reject(new Error("authService"));
+        return this.authService
             .GetEnrollmentData(user, Credential.Fingerprints)
             .then(data =>
                 (JSON.parse(Utf8.fromBase64Url(data)) as object[]).map(item => FingerEnrollment.fromJson(item))
             );
+    }
+
+    public enroll(user: JSONWebToken, position: FingerPosition, samples: BioSample[], securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.EnrollUserCredentials(
+            new Ticket(securityOfficer || this.securityOfficer || user),
+            new Ticket(user),
+            new Fingerprints(samples, position)
+        );
+    }
+
+    public unenroll(user: JSONWebToken, position: FingerPosition, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService.DeleteUserCredentials(
+            new Ticket(securityOfficer || this.securityOfficer || user),
+            new Ticket(user),
+            new Fingerprints([], position)
+        );
     }
 
     public enumerateDevices(): Promise<string[]> {

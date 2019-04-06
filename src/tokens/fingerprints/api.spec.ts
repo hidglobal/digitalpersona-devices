@@ -1,6 +1,6 @@
 import { Env } from './../../test';
 import { FingerprintsApi } from './api';
-import { User, AuthService } from '@digitalpersona/access-management';
+import { User, AuthService, EnrollService } from '@digitalpersona/access-management';
 
 describe("FingerprintsApi: ", () =>
 {
@@ -8,8 +8,10 @@ describe("FingerprintsApi: ", () =>
 
     beforeEach(()=>{
         api = new FingerprintsApi(
+            new AuthService(Env.AuthServerEndpoint),
+            new EnrollService(Env.EnrollServerEndpoint),
+            "",
             new WebSdk.WebChannelOptions({debug: Env.Trace, reconnectAlways: true }),
-            new AuthService(Env.AuthServerEndpoint)
         );
     })
 
