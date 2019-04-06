@@ -1,18 +1,17 @@
 import { User, Credential, Ticket, IAuthService, Utf16, JSONWebToken, Base64Url, IEnrollService } from '@digitalpersona/access-management';
-import { QuestionsEnrollmentData, Answers, Question } from './data';
+import { Questions, Answers, Question } from './data';
 import { authenticate } from '../../private';
+import { SecurityQuestions } from './credential';
 
-export class RecoveryQuestionsApi
+export class SecurityQuestionsApi
 {
-    private authService: IAuthService;
-    private enrollService?: IEnrollService;
+    constructor(
+        private readonly authService: IAuthService,
+        private readonly enrollService?: IEnrollService,
+        private readonly securityOfficer?: JSONWebToken,
+    ){}
 
-    constructor(authService: IAuthService, enrollService?: IEnrollService) {
-        this.authService = authService;
-        this.enrollService = enrollService
-    }
-
-    public getEnrollmentData(user: User): Promise<QuestionsEnrollmentData>
+    public getEnrollmentData(user: User): Promise<Questions>
     {
         return this
             .authService.GetEnrollmentData(user, Credential.SecurityQuestions)
@@ -23,34 +22,30 @@ export class RecoveryQuestionsApi
     public authenticate(user: User, answers: Answers): Promise<JSONWebToken>
     {
         return authenticate(user,
-            new Credential(Credential.SecurityQuestions, Base64Url.fromUtf16(JSON.stringify(answers))),
+            new SecurityQuestions({ answers}),
             this.authService);
     }
 
-    public enroll(securityOfficer: JSONWebToken, user: JSONWebToken, questions: Question[], answers: Answers): Promise<void>
+    public enroll(user: JSONWebToken, questions: Question[], answers: Answers, securityOfficer?: JSONWebToken): Promise<void>
     {
         if (!this.enrollService)
             return Promise.reject(new Error("enrollService"));
 
-        // take only answers with corresponding questions, then sort (NOTE: server requires inverse sort!)
-        const As = answers
-            .filter(a => questions.findIndex(q => q.number === a.number) >= 0)
-            .sort(a => -a.number);
-
-        // take only questions with corresponding answers, then sort (NOTE: server requires inverse sort!)
-        const Qs = questions
-            .filter(q => answers.findIndex(a => a.number === q.number) >= 0)
-            .sort(q => -q.number);
-
-        // now Qs and As correspond to each other and have the same rder. Zip then into a single array of enrollment data.
-        const data = Qs.map((q, i, qs) => ({
-            question: q,
-            answer: As[i]
-        }));
-
         return this.enrollService.EnrollUserCredentials(
-            new Ticket(securityOfficer),
+            new Ticket(securityOfficer || this.securityOfficer || user),
             new Ticket(user),
-            new Credential(Credential.SecurityQuestions, Base64Url.fromUtf16(JSON.stringify(data))));
+            new SecurityQuestions({ questions, answers }));
     }
+
+    public unenroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
+        if (!this.enrollService)
+            return Promise.reject(new Error("enrollService"));
+        return this.enrollService
+            .DeleteUserCredentials(
+                new Ticket(securityOfficer || this.securityOfficer || user),
+                new Ticket(user),
+                new SecurityQuestions({})
+            )
+    }
+
 }

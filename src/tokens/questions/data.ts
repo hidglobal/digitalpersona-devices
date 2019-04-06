@@ -1,21 +1,23 @@
 export enum QuestionType
 {
-    Regular,
-    Custom
+    Regular,    // number <= 100
+    Custom      // number > 100
 }
 export class Question
 {
-    public readonly version = 1;                   // must be set to 1
-    public readonly type: QuestionType;         // regular or custom
+    public readonly version = 1;                    // must be set to 1
+    public readonly type: QuestionType;             // regular or custom
 
     constructor(
         public readonly number: number,             // question index in a regular question list
         public readonly lang_id: number,            // language id
         public readonly sublang_id: number,         // sublaguage id
         public readonly keyboard_layout: number,    // Keyboard layout
-        public readonly text?: string,              // text of the question
+        public readonly text?: string,              // text of the question (required for CustomQuestion only)
     ){
-        this.type = number < 100 ? QuestionType.Regular : QuestionType.Custom;
+        this.type = number <= 100 ? QuestionType.Regular : QuestionType.Custom;
+        if (this.type === QuestionType.Custom && !text)
+            throw new Error("Question text is required for custom questions");
     }
 
     public static fromJson(json: object): Question
@@ -29,7 +31,7 @@ export class Question
     }
 }
 
-export type QuestionsEnrollmentData = Question[];
+export type Questions = Question[];
 
 export class Answer
 {
