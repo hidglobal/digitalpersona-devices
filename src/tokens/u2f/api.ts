@@ -1,9 +1,10 @@
 import * as u2fApi from 'u2f-api';
-import { User, Credential, JSONWebToken, IAuthService, Base64UrlString, Utf16, Base64Url } from '@digitalpersona/access-management';
+import { User, Credential, JSONWebToken, IAuthService, Base64UrlString, Utf16, Utf8, Base64Url, Ticket } from '@digitalpersona/access-management';
 import { Handler, MultiCastEventSource } from '../../private';
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
 import { AuthenticationData, IAuthenticationClient, authenticate } from '../../private/workflows';
 import { HandshakeData, HandshakeType } from './data';
+import { CustomAction, U2FAppId } from './actions';
 
 export class U2F
     extends MultiCastEventSource
@@ -24,6 +25,13 @@ export class U2F
 
     public authenticate(user: User): Promise<JSONWebToken> {
         return authenticate(user, Credential.U2F, this.authService, this.impl);
+    }
+
+    public getAppId(): Promise<string> {
+        return this.authService
+            .CustomAction(CustomAction.RequestAppId, Ticket.None(), User.Anonymous(), new Credential(Credential.U2F, ""))
+            .then(data =>
+                (JSON.parse(data) as U2FAppId).AppId);
     }
 }
 
