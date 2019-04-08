@@ -1,3 +1,3 @@
 export * from './cards';
 export * from './events';
-export * from './device';
+export * from './reader';

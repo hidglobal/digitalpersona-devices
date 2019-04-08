@@ -1,5 +1,5 @@
 import { Env } from './../../test';
-import { FingerprintReader } from './api';
+import { FingerprintReader } from './reader';
 
 describe("FingerprintsApi: ", () =>
 {

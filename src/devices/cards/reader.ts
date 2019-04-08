@@ -5,7 +5,7 @@ import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../event
 import { CardInserted, CardRemoved } from './events';
 import { CardsEventSource as CardsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, CardNotification, ReaderList, CardList } from "./messages";
-import { CardInfo, CardType } from './cards'
+import { Card, CardType } from './cards'
 import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/access-management';
 
 export class CardsReader
@@ -47,7 +47,7 @@ export class CardsReader
         })
     }
 
-    public enumerateCards(): Promise<CardInfo[]> {
+    public enumerateCards(): Promise<Card[]> {
         return this.channel.send(new Request(new Command(
             Method.EnumerateCards
         )))
@@ -58,13 +58,13 @@ export class CardsReader
         });
     }
 
-    public getCardInfo(reader: string): Promise<CardInfo|null> {
+    public getCardInfo(reader: string): Promise<Card|null> {
         return this.channel.send(new Request(new Command(
             Method.GetCardInfo,
             Base64Url.fromUtf16(JSON.stringify({ Reader: reader }))
         )))
         .then(response => {
-            const cardInfo: CardInfo = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
+            const cardInfo: Card = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
             return cardInfo;
         });
     }

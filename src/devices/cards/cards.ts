@@ -12,7 +12,7 @@ export enum CardAttributes {
     IsReadOnly = 0x80000000
 }
 
-export interface CardInfo {
+export interface Card {
     readonly Name: string;
     readonly Reader: string;
     readonly Type: CardType;
