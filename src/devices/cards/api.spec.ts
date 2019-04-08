@@ -1,4 +1,4 @@
-import { CardsReader } from './device';
+import { CardsReader } from './reader';
 import { Env } from './../../test';
 
 describe("CardsReader: ", ()=>

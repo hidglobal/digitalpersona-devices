@@ -37,9 +37,9 @@ export class BioSampleFormat
 
 export enum BioSampleType
 {
-    Raw                 = 0x01,   // Fingerprint image
-    Intermadiate        = 0x02,   // Fingerprint feature set
-    Processed           = 0x04,   // Fingerprint template
+    Raw                 = 0x01,   // Raw image
+    Intermediate        = 0x02,   // Feature set
+    Processed           = 0x04,   // Template
     RawWSQCompressed    = 0x08,   // WSQ compressed image
     Encrypted           = 0x10,
     Signed              = 0x20,
@@ -58,7 +58,7 @@ export enum BioSamplePurpose
 
 export enum BioSampleEncryption
 {
-    Nnone   = 0,    // Data is not encrypted
+    None   = 0,     // Data is not encrypted
     XTEA    = 1,    // XTEA encryption with well known key
 }
 

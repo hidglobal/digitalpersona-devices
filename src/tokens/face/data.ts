@@ -33,16 +33,19 @@ export class FaceImage
         return FaceImage.fromDataURL(canvas.toDataURL("image/jpeg", quality));
     }
 
-    public toBioSample(): BioSample
+    public toBioSample(
+        purpose: BioSamplePurpose,
+        format: BioSampleFormat = new BioSampleFormat(BioSampleFormatOwner.None, 0)
+    ): BioSample
     {
         return new BioSample(
             new BioSampleHeader(
                 BioFactor.FacialFeatures,
-                new BioSampleFormat(BioSampleFormatOwner.None, 0),
+                format,
                 BioSampleType.Raw,
-                BioSamplePurpose.Verify,
+                purpose,
                 -1,
-                BioSampleEncryption.Nnone),
+                BioSampleEncryption.None),
                 Base64Url.fromUtf8(JSON.stringify(this.ImageData))
         );
     }
