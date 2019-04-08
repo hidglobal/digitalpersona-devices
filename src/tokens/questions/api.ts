@@ -1,6 +1,6 @@
-import { User, Credential, Ticket, IAuthService, Utf16, JSONWebToken, Base64Url, IEnrollService } from '@digitalpersona/access-management';
+import { User, Credential, Ticket, IAuthService, IEnrollService, Utf16, JSONWebToken } from '@digitalpersona/access-management';
 import { Questions, Answers, Question } from './data';
-import { authenticate } from '../../private';
+import { authenticate } from '../workflows';
 import { SecurityQuestions } from './credential';
 
 export class SecurityQuestionsApi

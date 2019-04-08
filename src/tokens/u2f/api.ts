@@ -1,15 +1,11 @@
 import * as u2fApi from 'u2f-api';
 import { User, Credential, JSONWebToken, IAuthService, Base64UrlString, Utf16, Base64Url, Ticket, IEnrollService } from '@digitalpersona/access-management';
-import { Handler, MultiCastEventSource } from '../../private';
-import { CommunicationEventSource, CommunicationFailed  } from '../../common';
-import { AuthenticationData, IAuthenticationClient, authenticate } from '../../private/workflows';
+import { AuthenticationData, IAuthenticationClient, authenticate } from '../workflows';
 import { HandshakeData, HandshakeType } from './data';
 import { CustomAction, U2FAppId } from './actions';
 import { U2F } from './credential';
 
 export class U2FApi
-    extends MultiCastEventSource
-    implements CommunicationEventSource
 {
     private impl: U2FImpl = new U2FImpl();
     private static TIMEOUT = 20;
@@ -20,14 +16,7 @@ export class U2FApi
         private readonly authService: IAuthService,
         private readonly enrollService?: IEnrollService,
         private readonly securityOfficer?: JSONWebToken,
-    ){
-        super();
-    }
-
-    public onCommunicationFailed: Handler<CommunicationFailed>;
-
-    public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
-    public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
+    ){}
 
     public static isSupported(): Promise<boolean> {
         return u2fApi.isSupported();

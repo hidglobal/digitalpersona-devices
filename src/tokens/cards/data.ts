@@ -1,5 +1,3 @@
-import { Base64UrlString } from "@digitalpersona/access-management";
-
 export class SmartCardEnrollment
 {
     constructor(
