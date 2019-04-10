@@ -1,12 +1,22 @@
-export class SmartCardEnrollment
+import { Credential } from "@digitalpersona/access-management";
+
+export class SmartCard extends Credential
 {
-    constructor(
-        public readonly version: number,     // version
-        public readonly timeStamp: number,   // enrollment time
-        public readonly keyHash: string,     // public key’s hash.
-        public readonly nickname: string,    // token’s nickname
-    ){}
+    constructor(cardData: string) {
+        super(Credential.SmartCard, cardData);
+    }
 }
 
-export type SmartCardEnrollmentData = SmartCardEnrollment[];
+export class ContactlessCard extends Credential
+{
+    constructor(cardData: string) {
+        super(Credential.ContactlesCard, cardData);
+    }
+}
 
+export class ProximityCard extends Credential
+{
+    constructor(cardData: string) {
+        super(Credential.ProximityCard, cardData);
+    }
+}

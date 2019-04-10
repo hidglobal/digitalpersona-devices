@@ -1,7 +1,7 @@
 ﻿import { Credential, JSONWebToken, IAuthService } from '@digitalpersona/access-management';
 import { IAuthenticationClient, authenticate } from '../workflows';
 
-export class WindowsAuthApi
+export class WindowsAuth
 {
     constructor(
         private readonly authService: IAuthService,

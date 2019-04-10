@@ -1,39 +1,22 @@
 import * as u2fApi from 'u2f-api';
-import { User, Credential, JSONWebToken, IAuthService, Base64UrlString, Utf16, Base64Url, Ticket, IEnrollService } from '@digitalpersona/access-management';
+import { User, Credential, JSONWebToken, IAuthService, Base64UrlString, Utf16, Base64Url, Ticket } from '@digitalpersona/access-management';
 import { AuthenticationData, IAuthenticationClient, authenticate } from '../workflows';
 import { HandshakeData, HandshakeType } from './data';
 import { CustomAction, U2FAppId } from './actions';
-import { U2F } from './credential';
 
-export class U2FApi
+export class U2FAuth
 {
     private impl: U2FImpl = new U2FImpl();
-    private static TIMEOUT = 20;
-    private static TIME_WINDOW = 30;
 
     constructor(
-        public readonly appId: string,
         private readonly authService: IAuthService,
-        private readonly enrollService?: IEnrollService,
-        private readonly securityOfficer?: JSONWebToken,
-    ){}
+    ){
+        if (!this.authService)
+            throw new Error("authService");
+    }
 
     public static isSupported(): Promise<boolean> {
         return u2fApi.isSupported();
-    }
-
-    public authenticate(user: User): Promise<JSONWebToken> {
-        return authenticate(user, Credential.U2F, this.authService, this.impl);
-    }
-
-    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
-        if (!this.enrollService)
-            return Promise.reject(new Error("enrollService"));
-        return this.enrollService.IsEnrollmentAllowed(
-            new Ticket(securityOfficer || this.securityOfficer || ""),
-            user,
-            Credential.U2F
-        )
     }
 
     public getAppId(): Promise<string> {
@@ -43,38 +26,9 @@ export class U2FApi
                 (JSON.parse(data) as U2FAppId).AppId);
     }
 
-
-    public enroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
-        if (!this.enrollService)
-            return Promise.reject(new Error("enrollService"));
-
-        const timestamp = Math.round(new Date().getTime() / (U2FApi.TIME_WINDOW * 1000));
-        const challenge = Base64Url.fromUtf16(timestamp.toString());
-
-        const registerRequests: u2fApi.RegisterRequest[] = [{
-            version: "U2F_V2",
-            appId: this.appId,
-            challenge
-        }];
-        return u2fApi
-            .register(registerRequests, [], U2FApi.TIMEOUT)
-            .then(response => this.enrollService!.EnrollUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new U2F(this.appId, response)));
+    public authenticate(identity: User|JSONWebToken): Promise<JSONWebToken> {
+        return authenticate(identity, Credential.U2F, this.authService, this.impl);
     }
-
-    public unenroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
-        if (!this.enrollService)
-            return Promise.reject(new Error("enrollService"));
-        return this.enrollService
-            .DeleteUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new U2F(this.appId)
-            )
-    }
-
 }
 
 

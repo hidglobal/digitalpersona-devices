@@ -1,19 +1,16 @@
-import { Env } from './../../test'
-import { U2FApi } from './../u2f';
-import { AuthService, User, EnrollService } from '@digitalpersona/access-management';
+import { Env } from '../../test'
+import { U2FAuth } from '.';
+import { AuthService, User } from '@digitalpersona/access-management';
 
 describe("U2F Token: ", ()=>
 {
-    let api: U2FApi;
+    let api: U2FAuth;
 
-    const appId: string = Env.Domain;
     const user: User = new User("alpha\\administrator");
 
     beforeEach(()=>{
-        api = new U2FApi(
-            appId,
-            new AuthService(Env.AuthServerEndpoint),
-            new EnrollService(Env.EnrollServerEndpoint)
+        api = new U2FAuth(
+            new AuthService(Env.AuthServerEndpoint)
         );
     })
 

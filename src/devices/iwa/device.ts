@@ -6,10 +6,9 @@ import { Method } from './messages';
 import { IWAData } from './data';
 import { AuthenticationData, IAuthenticationClient } from '../../tokens/workflows';
 
-export class WindowsAuth
+export class WindowsAuthClient
     extends MultiCastEventSource
     implements CommunicationEventSource, IAuthenticationClient
-
 {
     private channel: Channel;
 
