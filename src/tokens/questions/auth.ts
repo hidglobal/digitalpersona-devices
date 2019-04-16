@@ -1,15 +1,12 @@
 import { User, Credential, IAuthService, Utf16, JSONWebToken } from '@digitalpersona/access-management';
 import { Questions, Answers, Question } from './data';
-import { authenticate } from '../workflows';
+import { Authenticator } from '../workflows';
 import { SecurityQuestions } from './credential';
 
-export class SecurityQuestionsAuth
+export class SecurityQuestionsAuth extends Authenticator
 {
-    constructor(
-        private readonly authService: IAuthService,
-    ){
-        if (!this.authService)
-            throw new Error("authService");
+    constructor(authService: IAuthService) {
+        super(authService)
     }
 
     public getQuestions(user: User): Promise<Questions>
@@ -23,7 +20,7 @@ export class SecurityQuestionsAuth
 
     public authenticate(identity: User|JSONWebToken, answers: Answers): Promise<JSONWebToken>
     {
-        return authenticate(identity, new SecurityQuestions({ answers}), this.authService);
+        return super._authenticate(identity, new SecurityQuestions({ answers}));
     }
 
 }

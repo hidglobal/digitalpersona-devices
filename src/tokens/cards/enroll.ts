@@ -1,5 +1,5 @@
 import { User, Ticket, Credential, CredentialId, IEnrollService, JSONWebToken } from '@digitalpersona/access-management';
-import { SmartCard, ContactlessCard, ProximityCard } from './data';
+import { SmartCard, ContactlessCard, ProximityCard } from './credential';
 
 class CardEnroll<Cred extends Credential>
 {

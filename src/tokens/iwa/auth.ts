@@ -1,15 +1,15 @@
 ﻿import { Credential, JSONWebToken, IAuthService } from '@digitalpersona/access-management';
-import { IAuthenticationClient, authenticate } from '../workflows';
+import { Authenticator } from '../workflows';
+import { WindowsAuthClient } from '../../devices';
 
-export class WindowsAuth
+export class WindowsAuth extends Authenticator
 {
-    constructor(
-        private readonly authService: IAuthService,
-        private readonly client: IAuthenticationClient,
-    ){}
+    constructor(authService: IAuthService, client: WindowsAuthClient) {
+        super(authService, client)
+    }
 
     public authenticate(): Promise<JSONWebToken> {
-        return authenticate(null, Credential.IWA, this.authService, this.client);
+        return super._authenticate(null, Credential.IWA);
     }
 }
 

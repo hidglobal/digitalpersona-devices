@@ -1,30 +1,28 @@
 import * as u2fApi from 'u2f-api';
 import { User, Credential, JSONWebToken, Base64Url, Ticket, IEnrollService } from '@digitalpersona/access-management';
 import { U2F } from './credential';
+import { Enroller } from '../workflows/enrollment';
 
-export class U2FEnroll
+export class U2FEnroll extends Enroller
 {
     private static TIMEOUT = 20;
     private static TIME_WINDOW = 30;
 
+    private readonly appId: string;
 
     constructor(
-        private readonly appId: string,
-        private readonly enrollService: IEnrollService,
-        private readonly securityOfficer?: JSONWebToken,
+        appId: string,
+        enrollService: IEnrollService,
+        securityOfficer?: JSONWebToken,
     ){
+        super(enrollService, securityOfficer);
         if (!appId)
             throw new Error("appId");
-        if (!enrollService)
-            throw new Error("enrollService");
+        this.appId = appId;
     }
 
     public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService.IsEnrollmentAllowed(
-            new Ticket(securityOfficer || this.securityOfficer || ""),
-            user,
-            Credential.U2F
-        )
+        return super._canEnroll(user, Credential.U2F, securityOfficer);
     }
 
     public enroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
@@ -38,19 +36,11 @@ export class U2FEnroll
         }];
         return u2fApi
             .register(registerRequests, [], U2FEnroll.TIMEOUT)
-            .then(response => this.enrollService!.EnrollUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new U2F(this.appId, response)));
+            .then(response => super._enroll(user, new U2F(this.appId, response), securityOfficer));
     }
 
     public unenroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService
-            .DeleteUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new U2F(this.appId)
-            )
+        return super._unenroll(user, new U2F(this.appId), securityOfficer);
     }
 
 }

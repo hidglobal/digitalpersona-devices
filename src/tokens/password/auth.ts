@@ -1,33 +1,30 @@
-import { User, IAuthService, JSONWebToken } from '@digitalpersona/access-management';
+import { User, Ticket, IAuthService, JSONWebToken } from '@digitalpersona/access-management';
 import { CustomAction } from './actions';
 import { Password } from './credential';
-import { authenticate } from '../workflows';
+import { Authenticator } from '../workflows';
 
-export class PasswordAuth
+export class PasswordAuth extends Authenticator
 {
-    constructor(
-        private readonly authService: IAuthService,
-    ){
-        if (!this.authService)
-            throw new Error("authService");
+    constructor(authService: IAuthService) {
+        super(authService);
     }
 
-    authenticate(identity: User|JSONWebToken, password: string): Promise<JSONWebToken> {
-        return authenticate(identity, new Password(password), this.authService);
+    public authenticate(identity: User|JSONWebToken, password: string): Promise<JSONWebToken> {
+        return super._authenticate(identity, new Password(password));
     }
 
-    // randomize(user: User, securityOfficer?: JSONWebToken): Promise<string> {
-    //     return this.authService.CustomAction(
-    //         CustomAction.PasswordRandomization,
-    //         new Ticket(securityOfficer || this.securityOfficer || ""),
-    //         user);
-    // }
+    public randomize(user: User, token: JSONWebToken): Promise<string> {
+        return this.authService.CustomAction(
+            CustomAction.PasswordRandomization,
+            new Ticket(token),
+            user);
+    }
 
-    // reset(user: User, newPassword: string, securityOfficer?: JSONWebToken): Promise<string> {
-    //     return this.authService.CustomAction(
-    //         CustomAction.PasswordReset,
-    //         new Ticket(securityOfficer || this.securityOfficer || ""),
-    //         user,
-    //         new Password(newPassword));
-    // }
+    public reset(user: User, newPassword: string, token: JSONWebToken): Promise<string> {
+        return this.authService.CustomAction(
+            CustomAction.PasswordReset,
+            new Ticket(token),
+            user,
+            new Password(newPassword));
+    }
 }

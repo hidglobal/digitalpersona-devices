@@ -2,15 +2,12 @@ import { User, JSONWebToken, Credential, IEnrollService, Ticket, Utf8 } from '@d
 import { BioSample } from '../../common';
 import { FingerPosition, Finger, Fingers } from './data';
 import { Fingerprints } from './credential';
+import { Enroller } from '../workflows/enrollment';
 
-export class FingerprintsEnroll
+export class FingerprintsEnroll extends Enroller
 {
-    constructor(
-        private readonly enrollService: IEnrollService,
-        private readonly securityOfficer?: JSONWebToken,
-    ) {
-        if (!this.enrollService)
-            throw new Error("enrollService");
+    constructor(enrollService: IEnrollService, securityOfficer?: JSONWebToken) {
+        super(enrollService, securityOfficer)
     }
 
     public getEnrolledFingers(user: User): Promise<Fingers>
@@ -23,26 +20,14 @@ export class FingerprintsEnroll
     }
 
     public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService.IsEnrollmentAllowed(
-            new Ticket(securityOfficer || this.securityOfficer || ""),
-            user,
-            Credential.Fingerprints
-        )
+        return super._canEnroll(user, Credential.Fingerprints, securityOfficer);
     }
 
     public enroll(user: JSONWebToken, position: FingerPosition, samples: BioSample[], securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService.EnrollUserCredentials(
-            new Ticket(securityOfficer || this.securityOfficer || user),
-            new Ticket(user),
-            new Fingerprints(samples, position)
-        );
+        return super._enroll(user, new Fingerprints(samples, position), securityOfficer);
     }
 
     public unenroll(user: JSONWebToken, position: FingerPosition, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService.DeleteUserCredentials(
-            new Ticket(securityOfficer || this.securityOfficer || user),
-            new Ticket(user),
-            new Fingerprints([], position)
-        );
+        return super._unenroll(user, new Fingerprints([], position), securityOfficer);
     }
 }

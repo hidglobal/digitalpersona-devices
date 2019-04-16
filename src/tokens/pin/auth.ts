@@ -1,17 +1,14 @@
 import { User, Ticket, IAuthService, IEnrollService, JSONWebToken, Credential } from '@digitalpersona/access-management';
 import { PIN } from './credential';
-import { authenticate } from '../workflows';
+import { Authenticator } from '../workflows';
 
-export class PinAuth
+export class PinAuth extends Authenticator
 {
-    constructor(
-        private readonly authService: IAuthService,
-    ){
-        if (!this.authService)
-            throw new Error("authService");
+    constructor(authService: IAuthService) {
+        super(authService)
     }
 
     public authenticate(identity: User|JSONWebToken, pin: string): Promise<JSONWebToken> {
-        return authenticate(identity, new PIN(pin), this.authService);
+        return super._authenticate(identity, new PIN(pin));
     }
 }

@@ -1,14 +1,13 @@
 import { User, IAuthService, JSONWebToken, Credential } from '@digitalpersona/access-management';
-import { SmartCard, ContactlessCard, ProximityCard } from './data';
-import { authenticate } from '../workflows';
+import { SmartCard, ContactlessCard, ProximityCard } from './credential';
+import { Authenticator } from '../workflows';
 
-class CardsAuth<Cred extends Credential> {
+class CardsAuth<Cred extends Credential> extends Authenticator {
     constructor(
         protected readonly Cred: (new(data: string) => Cred),
-        protected readonly authServer: IAuthService,
+        protected readonly authService: IAuthService,
     ){
-        if (!this.authServer)
-            throw new Error("authServer");
+        super(authService);
     }
 
     // Authenticates the user using the card.
@@ -16,27 +15,40 @@ class CardsAuth<Cred extends Credential> {
     // For smart cards this method is usually called when the user types and submits a PIN.
     public authenticate(identity: User|JSONWebToken, cardData: string): Promise<JSONWebToken>
     {
-        return authenticate(identity, new this.Cred(cardData), this.authServer);
+        return super._authenticate(identity, new this.Cred(cardData));
     }
 }
 
 export class SmartCardAuth extends CardsAuth<SmartCard>
 {
-    constructor(authServer: IAuthService) {
-        super(SmartCard, authServer)
+    constructor(authService: IAuthService) {
+        super(SmartCard, authService)
     }
 }
 
 export class ContactlessCardAuth extends CardsAuth<ContactlessCard>
 {
-    constructor(authServer: IAuthService){
-        super(ContactlessCard, authServer);
+    constructor(authService: IAuthService){
+        super(ContactlessCard, authService);
+    }
+    public identify(cardData: string): Promise<JSONWebToken>
+    {
+        return this.authService
+            .IdentifyUser(new ContactlessCard(cardData))
+            .then(ticket => ticket.jwt);
     }
 }
 
 export class ProximityCardAuth extends CardsAuth<ProximityCard>
 {
-    constructor(authServer: IAuthService){
-        super(ProximityCard, authServer);
+    constructor(authService: IAuthService){
+        super(ProximityCard, authService);
+    }
+
+    public identify(cardData: string): Promise<JSONWebToken>
+    {
+        return this.authService
+            .IdentifyUser(new ProximityCard(cardData))
+            .then(ticket => ticket.jwt);
     }
 }

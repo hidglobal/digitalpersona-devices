@@ -1,24 +1,19 @@
 import { User, JSONWebToken, IAuthService } from '@digitalpersona/access-management'
 import { BioSample } from '../../common';
 import { Face } from './credential';
-import { authenticate } from '../workflows';
+import { Authenticator } from '../workflows';
 
-export class FaceAuth
+export class FaceAuth extends Authenticator
 {
-    constructor(
-        private readonly authService: IAuthService,
-    ){
-        if (!this.authService)
-            throw new Error("authService");
+    constructor(authService: IAuthService){
+        super(authService)
     }
 
     public authenticate(identity: User|JSONWebToken, samples: BioSample[]) {
-        return authenticate(identity,  new Face(samples), this.authService);
+        return super._authenticate(identity,  new Face(samples));
     }
 
     public identify(samples: BioSample[]): Promise<JSONWebToken> {
-        return this.authService
-            .IdentifyUser(new Face(samples))
-            .then(ticket => ticket.jwt);
+        return super._identify(new Face(samples));
     }
 }

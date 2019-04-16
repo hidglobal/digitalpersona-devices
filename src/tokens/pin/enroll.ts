@@ -1,38 +1,32 @@
-import { User, Ticket, IEnrollService, JSONWebToken, Credential } from '@digitalpersona/access-management';
+import { User, IEnrollService, JSONWebToken, Credential } from '@digitalpersona/access-management';
 import { PIN } from './credential';
+import { Enroller } from '../workflows/enrollment';
 
-export class PinEnroll
+export class PinEnroll extends Enroller
 {
     constructor(
-        private readonly enrollService: IEnrollService,
-        private readonly securityOfficer?: JSONWebToken,
+        enrollService: IEnrollService,
+        securityOfficer?: JSONWebToken,
     ){
-        if (!enrollService)
-            throw new Error("enrollService");
+        super(enrollService, securityOfficer);
     }
 
-    public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService.IsEnrollmentAllowed(
-            new Ticket(securityOfficer || this.securityOfficer || ""),
-            user,
-            Credential.PIN
-        )
+    public canEnroll(
+        user: User,
+        securityOfficer?: JSONWebToken): Promise<void>
+    {
+        return super._canEnroll(user, Credential.PIN, securityOfficer);
     }
 
-    public enroll(user: JSONWebToken, pin: string, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService
-            .EnrollUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new PIN(pin));
+    public enroll(
+        user: JSONWebToken,
+        pin: string,
+        securityOfficer?: JSONWebToken): Promise<void>
+    {
+        return super._enroll(user, new PIN(pin), securityOfficer);
     }
 
     public unenroll(user: JSONWebToken, securityOfficer?: JSONWebToken): Promise<void> {
-        return this.enrollService
-            .DeleteUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new PIN("")
-            )
+        return super._unenroll(user, new PIN(""), securityOfficer);
     }
 }

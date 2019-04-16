@@ -1,43 +1,34 @@
 import { User, Credential, Ticket, IEnrollService, JSONWebToken } from '@digitalpersona/access-management';
 import { CustomAction } from './actions';
 import { Password } from './credential';
+import { Enroller } from '../workflows/enrollment';
 
-export class PasswordEnroll
+export class PasswordEnroll extends Enroller
 {
-    constructor(
-        private readonly enrollService: IEnrollService,
-        private readonly securityOfficer?: JSONWebToken,
-    ){
-        if (!enrollService)
-            throw new Error("enrollService");
+    constructor(enrollService: IEnrollService, securityOfficer?: JSONWebToken) {
+        super(enrollService, securityOfficer)
     }
 
     public canEnroll(user: User, securityOfficer?: JSONWebToken): Promise<void> {
-        if (!this.enrollService)
-            return Promise.reject(new Error("enrollService"));
-        return this.enrollService.IsEnrollmentAllowed(
+        return super._canEnroll(user, Credential.Password, securityOfficer);
+    }
+
+    public enroll(user: JSONWebToken, newPassword: string, oldPassword: string, securityOfficer?: JSONWebToken): Promise<void> {
+        return super._enroll(user, new Password(newPassword, oldPassword), securityOfficer);
+    }
+
+    public reset(user: JSONWebToken, newPassword: string, securityOfficer?: JSONWebToken): Promise<void> {
+        // TODO: this operation is not supported for AD users, check and throw
+        return super._enroll(user, new Password(newPassword, null), securityOfficer);
+    }
+
+    public randomize(user: User, securityOfficer?: JSONWebToken): Promise<string> {
+        return this.enrollService.CustomAction(
             new Ticket(securityOfficer || this.securityOfficer || ""),
             user,
-            Credential.Password
-        )
+            new Password(""),
+            CustomAction.PasswordRandomization);
     }
-
-    enroll(user: JSONWebToken, password: string, oldPassword: string|null = null, securityOfficer?: JSONWebToken): Promise<void> {
-        if (!this.enrollService)
-            return Promise.reject(new Error("enrollService"));
-        return this.enrollService
-            .EnrollUserCredentials(
-                new Ticket(securityOfficer || this.securityOfficer || user),
-                new Ticket(user),
-                new Password(password));
-    }
-
-    // randomize(user: User, securityOfficer?: JSONWebToken): Promise<string> {
-    //     return this.enrollService.CustomAction(
-    //         CustomAction.PasswordRandomization,
-    //         new Ticket(securityOfficer || this.securityOfficer || ""),
-    //         user);
-    // }
 
     // reset(user: User, newPassword: string, securityOfficer?: JSONWebToken): Promise<string> {
     //     return this.enrollService.CustomAction(
