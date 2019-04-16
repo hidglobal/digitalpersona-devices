@@ -17,7 +17,8 @@ export class PasswordAuth extends Authenticator
         return this.authService.CustomAction(
             CustomAction.PasswordRandomization,
             new Ticket(token),
-            user);
+            user,
+            new Password(null));
     }
 
     public reset(user: User, newPassword: string, token: JSONWebToken): Promise<string> {

@@ -1,6 +1,6 @@
-import { User, IAuthService, JSONWebToken, Ticket } from '@digitalpersona/access-management';
+import { User, IAuthService, JSONWebToken, Ticket, Credential, Base64Url } from '@digitalpersona/access-management';
 import { CustomAction } from './actions'
-import { TimeOTP, SmsOTP, EmailOTP, PushNotification } from './credential';
+import { TimeOTP, SmsOTP, EmailOTP, PushNotification, HardwareTimeOTP } from './credential';
 import { Authenticator } from '../workflows';
 
 export class TimeOtpAuth extends Authenticator
@@ -12,6 +12,21 @@ export class TimeOtpAuth extends Authenticator
     // Authenticate the user using user's response on the challenge
     public authenticate(identity: User|JSONWebToken, code: string) {
         return super._authenticate(identity, new TimeOTP(code));
+    }
+
+    public getUnlockCode(userOrSerialNumber: User|string, challenge: string, token?: JSONWebToken) {
+        const [ user, serialNumber ] =
+            (userOrSerialNumber instanceof User)
+                ? [ userOrSerialNumber, null ]
+                : [ User.Anonymous(), userOrSerialNumber];
+        return this.authService
+            .CustomAction(CustomAction.UnlockActiveIdHardwareToken,
+                new Ticket(token || ""),
+                user,
+                new Credential(Credential.OneTimePassword, {
+                    challenge,
+                    serialNumber
+            }));
     }
 }
 

@@ -53,7 +53,7 @@ export class FingerprintReader
     public getDeviceInfo(deviceUid: string): Promise<DeviceInfo|null> {
         return this.channel.send(new Request(new Command(
             Method.GetDeviceInfo,
-            Base64Url.fromUtf16(JSON.stringify({ DeviceID: deviceUid }))
+            Base64Url.fromJSON({ DeviceID: deviceUid })
         )))
         .then(response => {
             var deviceInfo: DeviceInfo = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
@@ -64,10 +64,10 @@ export class FingerprintReader
     public startAcquisition(sampleFormat: SampleFormat, deviceUid?: string): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.StartAcquisition,
-            Base64Url.fromUtf16(JSON.stringify({
+            Base64Url.fromJSON({
                 DeviceID: deviceUid ? deviceUid : "00000000-0000-0000-0000-000000000000",
                 SampleType: sampleFormat
-            }))
+            })
         )))
         .then(() => {});
     }
@@ -75,9 +75,9 @@ export class FingerprintReader
     public stopAcquisition(deviceUid?: string): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.StopAcquisition,
-            Base64Url.fromUtf16(JSON.stringify({
+            Base64Url.fromJSON({
                 DeviceID: deviceUid ? deviceUid : "00000000-0000-0000-0000-000000000000"
-            }))
+            })
         )))
         .then(() => {});
     }

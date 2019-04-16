@@ -46,7 +46,7 @@ export class FaceImage
                 purpose,
                 -1,
                 BioSampleEncryption.None),
-                Base64Url.fromUtf8(JSON.stringify(this.ImageData))
+                Base64Url.fromJSON(this.ImageData)  // ???
         );
     }
 }

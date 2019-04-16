@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@digitalpersona/access-management@^0.0.11":
-  version "0.0.11"
-  resolved "http://localhost:4873/@digitalpersona%2faccess-management/-/access-management-0.0.11.tgz#b2bd18d4f04b150167789df3c8d181b8eaa9836d"
-  integrity sha512-xvRH/+sokUdxeD0IRHOf8FPT7Fo6D8xDYZrQ5sAMF7AlzEpXItwELYu9ql6h9qcRao+a9PQD4put6FJxIcYwUg==
+"@digitalpersona/access-management@^0.0.14":
+  version "0.0.14"
+  resolved "http://localhost:4873/@digitalpersona%2faccess-management/-/access-management-0.0.14.tgz#97c3e526fccf2c35586baf324c14226d3c7f1e73"
+  integrity sha512-ziavGmOhUw20wo62n+RxwTReUF6cwGXRkuy1ge0Gw33akSxkkzL246XWORb512QVOOtFrNyL+RhGJU0ctdizBQ==
   dependencies:
     tslib "^1.9.3"
 

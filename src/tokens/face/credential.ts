@@ -4,8 +4,6 @@ import { BioSample } from '../../common';
 export class Face extends Credential
 {
     constructor(samples: BioSample[]) {
-        super(Credential.Face, Base64Url.fromUtf16(JSON.stringify(
-            samples
-        )))
+        super(Credential.Face, samples)
     }
 }

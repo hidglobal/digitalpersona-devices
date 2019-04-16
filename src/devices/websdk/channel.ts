@@ -80,7 +80,7 @@ export class Channel
     private processRequestQueue(): void {
         this.pending.forEach((req, i, items) => {
             if (!req.sent) {
-                this.webChannel.sendDataTxt(Base64Url.fromUtf16(JSON.stringify(req.command)));
+                this.webChannel.sendDataTxt(Base64Url.fromJSON(req.command));
                 items[i].sent = true;
             }
         })

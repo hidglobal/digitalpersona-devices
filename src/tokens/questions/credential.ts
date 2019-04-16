@@ -1,14 +1,14 @@
-import { Credential, Base64Url } from '@digitalpersona/access-management';
+import { Credential } from '@digitalpersona/access-management';
 import { Questions, Answers } from "./data";
 
 export class SecurityQuestions extends Credential
 {
     constructor(data: {questions?: Questions, answers?: Answers}) {
-        super(Credential.SecurityQuestions, Base64Url.fromUtf16(JSON.stringify(
+        super(Credential.SecurityQuestions,
             data.answers && data.questions
                 ? SecurityQuestions.canonicalize({ questions: data.questions, answers: data.answers })
                 : data.answers || data.questions || null
-        )));
+        );
     }
 
     private static canonicalize(data: { questions: Questions, answers: Answers }) {

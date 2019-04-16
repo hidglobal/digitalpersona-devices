@@ -61,7 +61,7 @@ export class CardsReader
     public getCardInfo(reader: string): Promise<Card|null> {
         return this.channel.send(new Request(new Command(
             Method.GetCardInfo,
-            Base64Url.fromUtf16(JSON.stringify({ Reader: reader }))
+            Base64Url.fromJSON({ Reader: reader })
         )))
         .then(response => {
             const cardInfo: Card = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
@@ -72,7 +72,7 @@ export class CardsReader
     public getCardUid(reader: string): Promise<string> {
         return this.channel.send(new Request(new Command(
             Method.GetCardUID,
-            Base64Url.fromUtf16(JSON.stringify({ Reader: reader }))
+            Base64Url.fromJSON({ Reader: reader })
         )))
         .then(response => {
             const data = Base64.fromBase64Url(response.Data || "");
@@ -83,7 +83,7 @@ export class CardsReader
     public getCardAuthData(reader: string, pin?: string): Promise<string> {
         return this.channel.send(new Request(new Command(
             Method.GetDPCardAuthData,
-            Base64Url.fromUtf16(JSON.stringify({ Reader: reader, PIN: pin || "" }))
+            Base64Url.fromJSON({ Reader: reader, PIN: pin || "" })
         )))
         .then(response => {
             const data = Utf8.fromBase64Url(response.Data || "");
@@ -94,7 +94,7 @@ export class CardsReader
     public getCardEnrollData(reader: string, pin?: string): Promise<string> {
         return this.channel.send(new Request(new Command(
             Method.GetDPCardEnrollData,
-            Base64Url.fromUtf16(JSON.stringify({ Reader: reader, PIN: pin || "" }))
+            Base64Url.fromJSON({ Reader: reader, PIN: pin || "" })
         )))
         .then(response => {
             const data = Utf8.fromBase64Url(response.Data || "");
@@ -105,7 +105,7 @@ export class CardsReader
     public subscribe(reader?: string): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.Subscribe,
-            reader ? Base64Url.fromUtf16(JSON.stringify({ Reader: reader })) : ""
+            reader ? Base64Url.fromJSON({ Reader: reader }) : ""
         )))
         .then(()=>{});
     }
@@ -113,7 +113,7 @@ export class CardsReader
     public unsubscribe(reader?: string): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.Unsubscribe,
-            reader ? Base64Url.fromUtf16(JSON.stringify({ Reader: reader })) : ""
+            reader ? Base64Url.fromJSON({ Reader: reader }) : ""
         )))
         .then(()=>{});
     }
