@@ -34,8 +34,9 @@ export class FaceImage
     }
 
     public toBioSample(
-        purpose: BioSamplePurpose,
-        format: BioSampleFormat = new BioSampleFormat(BioSampleFormatOwner.None, 0)
+        format: BioSampleFormat = new BioSampleFormat(BioSampleFormatOwner.None, 0),
+        purpose: BioSamplePurpose = BioSamplePurpose.Any,
+        sdkVersion = 0x30100,
     ): BioSample
     {
         return new BioSample(
@@ -45,8 +46,9 @@ export class FaceImage
                 BioSampleType.Raw,
                 purpose,
                 -1,
-                BioSampleEncryption.None),
-                Base64Url.fromJSON(this.ImageData)  // ???
+                BioSampleEncryption.None
+            ),
+            Base64Url.fromJSON(new FIRData(sdkVersion, this.ImageData))
         );
     }
 }
