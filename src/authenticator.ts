@@ -1,6 +1,9 @@
 import { User, IAuthService, IPolicyService, CredentialId, ResourceActions, ContextualInfo, Policy, JSONWebToken, JWT } from '@digitalpersona/access-management'
 import { WindowsAuthClient } from './devices';
 
+/*
+@category Authentication
+*/
 export class Authenticator
 {
     private static windowsAuthClient = new WindowsAuthClient();

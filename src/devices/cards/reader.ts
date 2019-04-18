@@ -5,7 +5,7 @@ import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../event
 import { CardInserted, CardRemoved } from './events';
 import { CardsEventSource as CardsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, CardNotification, ReaderList, CardList } from "./messages";
-import { Card, CardType } from './cards'
+import { Card } from './cards'
 import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/access-management';
 
 export class CardsReader
@@ -19,13 +19,6 @@ export class CardsReader
     public onCardInserted: Handler<CardInserted>;
     public onCardRemoved: Handler<CardRemoved>;
     public onCommunicationFailed: Handler<CommunicationFailed>;
-
-    public on(event: "DeviceConnected", handler: Handler<DeviceConnected>): this;
-    public on(event: "DeviceDisconnected", handler: Handler<DeviceDisconnected>): this;
-    public on(event: "CardInserted", handler: Handler<CardInserted>): this;
-    public on(event: "CardRemoved", handler: Handler<CardRemoved>): this;
-
-    public on(event: "CommunicationFailed", handler: Handler<CommunicationFailed>): this;
 
     public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
     public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }

@@ -3,8 +3,6 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "dist/typings",
-    "emitDeclarationOnly": true,
-    "declaration": true,
     "lib": ["dom", "es2015", "es2015.promise" ],
     "typeRoots": [
       "node_modules/@types",
@@ -16,6 +14,8 @@
       "*": [ "@types/*" ]
     },
 
+    "emitDeclarationOnly": true,
+    "declaration": true,
     "esModuleInterop": true,
     "removeComments": false,
     "preserveConstEnums": true,
@@ -30,15 +30,29 @@
     "strictNullChecks": true,
     "downlevelIteration": true
   },
-  "include": [
-    "src",
-    "@types"
-  ],
+  "files": [ "src/index.ts" ],
+  // "include": [
+  //   "src",
+  //   "@types"
+  // ],
   "exclude": [
     "node_modules",
-    "src/devices/face",
-    "src/devices/otp",
-    "src/devices/questions",
     "dist"
-  ]
+  ],
+  "typedocOptions": {
+    "mode": "file",
+    "out": "dist/docs",
+    "module": "commonjs",
+    "target": "es5",
+    "theme": "default",
+    "excludeExternals": true,
+    "includeDeclarations": false,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeNotExported": true,
+    "stripInternal": true,
+    "ignoreCompilerErrors": true,
+    "readme": "none",
+    "exclude": [ "node_modules", "**/examples/**/*", "**/*.spec.ts", "**/private/**/*", "**/workflows/**/*" ]
+  }
 }

@@ -3,6 +3,9 @@ import { Request, Response } from './command';
 import { MessageType, Message } from './messages';
 import 'WebSdk';
 
+/**@internal
+ *
+ */
 export class Channel
 {
     private webChannel: WebSdk.WebChannelClient;

@@ -1,0 +1,4 @@
+{
+    "vsicons.presets.angular": true,
+    "files.associations": { "*.json": "jsonc" }
+}

@@ -1,3 +1,4 @@
+/**@internal */
 export enum CustomAction
 {
     SendEmailVerificationRequest = 16,

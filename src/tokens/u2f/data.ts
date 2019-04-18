@@ -1,7 +1,13 @@
 import { Base64UrlString } from "@digitalpersona/access-management";
 
+/**@internal
+ *
+ */
 type ClientDataType = "navigator.id.getAssertion" | "navigator.id.finishEnrollment"
 
+/**@internal
+ *
+ */
 export class ClientData
 {
     public readonly typ: ClientDataType;
@@ -25,6 +31,9 @@ export class ClientData
     }
 }
 
+/**@internal
+ *
+ */
 export const enum HandshakeType
 {
     ChallengeRequest = 0,

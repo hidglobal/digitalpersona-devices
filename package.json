@@ -1,7 +1,7 @@
 {
   "name": "@digitalpersona/device-access.js",
   "globalObject": "dp.deviceAccess",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
@@ -61,13 +61,15 @@
     "test-common": "set UUT=common&& karma start",
     "test-fp": "set UUT=fp&& karma start",
     "test-card": "set UUT=card&& karma start",
-    "docs": "typedoc --options ./build/typedoc.config.js ./src",
+    "docs": "typedoc ./src",
+    "api": "api-extractor run --local --verbose",
+    "api-doc": "api-documenter markdown -i ./dist/api -o ./dist/api/doc",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@digitalpersona/access-management": "^0.0.14",
     "tslib": "^1.9.3",
-    "u2f-api": "^1.0.10",
-    "@digitalpersona/access-management": "^0.0.14"
+    "u2f-api": "^1.0.10"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.9",

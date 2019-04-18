@@ -1,3 +1,6 @@
+/**@internal
+ *
+ */
 export class Command
 {
     public readonly Method: number;
@@ -9,6 +12,9 @@ export class Command
     }
 }
 
+/**@internal
+ *
+ */
 export class Request
 {
     public readonly command: Command;
@@ -23,6 +29,9 @@ export class Request
     }
 }
 
+/**@internal
+ *
+ */
 export interface Response {
     readonly Method: number;
     readonly Result: number;

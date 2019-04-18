@@ -1,6 +1,7 @@
 import { Base64String, Base64UrlString, Base64Url } from '@digitalpersona/access-management';
 import { BioSample, BioSampleHeader, BioSampleFormatOwner, BioSamplePurpose, BioSampleType, BioSampleEncryption, BioFactor, BioSampleFormat } from '../../common';
 
+/**@internal */
 export class FIRData
 {
     public readonly version = 1;
@@ -11,6 +12,7 @@ export class FIRData
     ){}
 }
 
+/**@internal */
 export enum FaceImageType
 {
     Jpeg = 1

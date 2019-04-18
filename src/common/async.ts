@@ -1,3 +1,6 @@
+/**@internal
+ *
+ */
 export class Deferred<T> {
     public promise: Promise<T>;
     public resolve: Function;

@@ -2,12 +2,10 @@ import { User, IAuthService, JSONWebToken, Credential } from '@digitalpersona/ac
 import { SmartCard, ContactlessCard, ProximityCard } from './credential';
 import { Authenticator } from '../workflows';
 
-class CardsAuth<Cred extends Credential> extends Authenticator {
-    constructor(
-        protected readonly Cred: (new(data: string) => Cred),
-        protected readonly authService: IAuthService,
-    ){
-        super(authService);
+export class SmartCardAuth extends Authenticator
+{
+    constructor(authService: IAuthService) {
+        super(authService)
     }
 
     // Authenticates the user using the card.
@@ -15,22 +13,23 @@ class CardsAuth<Cred extends Credential> extends Authenticator {
     // For smart cards this method is usually called when the user types and submits a PIN.
     public authenticate(identity: User|JSONWebToken, cardData: string): Promise<JSONWebToken>
     {
-        return super._authenticate(identity, new this.Cred(cardData));
+        return super._authenticate(identity, new SmartCard(cardData));
     }
 }
 
-export class SmartCardAuth extends CardsAuth<SmartCard>
-{
-    constructor(authService: IAuthService) {
-        super(SmartCard, authService)
-    }
-}
-
-export class ContactlessCardAuth extends CardsAuth<ContactlessCard>
+export class ContactlessCardAuth extends Authenticator
 {
     constructor(authService: IAuthService){
-        super(ContactlessCard, authService);
+        super(authService);
     }
+    // Authenticates the user using the card.
+    // For contactless/proximity cards this method is usually called on tap (from the onCardInserted event handler).
+    // For smart cards this method is usually called when the user types and submits a PIN.
+    public authenticate(identity: User|JSONWebToken, cardData: string): Promise<JSONWebToken>
+    {
+        return super._authenticate(identity, new ContactlessCard(cardData));
+    }
+
     public identify(cardData: string): Promise<JSONWebToken>
     {
         return this.authService
@@ -39,12 +38,19 @@ export class ContactlessCardAuth extends CardsAuth<ContactlessCard>
     }
 }
 
-export class ProximityCardAuth extends CardsAuth<ProximityCard>
+export class ProximityCardAuth extends Authenticator
 {
     constructor(authService: IAuthService){
-        super(ProximityCard, authService);
+        super(authService);
     }
 
+    // Authenticates the user using the card.
+    // For contactless/proximity cards this method is usually called on tap (from the onCardInserted event handler).
+    // For smart cards this method is usually called when the user types and submits a PIN.
+    public authenticate(identity: User|JSONWebToken, cardData: string): Promise<JSONWebToken>
+    {
+        return super._authenticate(identity, new ProximityCard(cardData));
+    }
     public identify(cardData: string): Promise<JSONWebToken>
     {
         return this.authService

@@ -1,6 +1,9 @@
 import { IAuthService, IEnrollService, JSONWebToken } from '@digitalpersona/access-management'
 
-export class Enroller
+/*
+@category Enrollment
+*/
+export abstract class Enroller
 {
     constructor(
         private readonly authService: IAuthService,

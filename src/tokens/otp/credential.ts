@@ -1,5 +1,6 @@
 import { Credential, Base64Url } from '@digitalpersona/access-management';
 
+/**@internal */
 export class TimeOTP extends Credential
 {
     constructor(code?: string) {
@@ -7,6 +8,7 @@ export class TimeOTP extends Credential
     }
 }
 
+/**@internal */
 export class SoftwareTimeOTP extends Credential
 {
     constructor(code: string, key: string, phoneNumber?: string) {
@@ -18,6 +20,7 @@ export class SoftwareTimeOTP extends Credential
     }
 }
 
+/**@internal */
 export class HardwareTimeOTP extends Credential
 {
     constructor(code: string, serialNumber: string, counter?: string, timer?: string) {
@@ -30,6 +33,7 @@ export class HardwareTimeOTP extends Credential
     }
 }
 
+/**@internal */
 export class EmailOTP extends Credential
 {
     constructor(code: string) {
@@ -37,6 +41,7 @@ export class EmailOTP extends Credential
     }
 }
 
+/**@internal */
 export class SmsOTP extends Credential
 {
     constructor(code?: string) {
@@ -44,6 +49,7 @@ export class SmsOTP extends Credential
     }
 }
 
+/**@internal */
 export class PushNotification extends Credential
 {
     constructor(code?: string) {

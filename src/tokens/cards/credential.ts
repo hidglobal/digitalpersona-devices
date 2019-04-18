@@ -1,5 +1,6 @@
 import { Credential } from "@digitalpersona/access-management";
 
+/**@internal */
 export class SmartCard extends Credential
 {
     constructor(cardData: string) {
@@ -7,6 +8,7 @@ export class SmartCard extends Credential
     }
 }
 
+/**@internal */
 export class ContactlessCard extends Credential
 {
     constructor(cardData: string) {
@@ -14,6 +16,7 @@ export class ContactlessCard extends Credential
     }
 }
 
+/**@internal */
 export class ProximityCard extends Credential
 {
     constructor(cardData: string) {

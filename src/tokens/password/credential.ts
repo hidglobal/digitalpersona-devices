@@ -1,5 +1,6 @@
 import { Credential } from "@digitalpersona/access-management";
 
+/**@internal */
 export class Password extends Credential
 {
     constructor(password: string|null, oldPassword?: string|null) {

@@ -1,4 +1,4 @@
-import { Base64UrlString, Base64Url } from "@digitalpersona/access-management";
+import { Base64UrlString } from "@digitalpersona/access-management";
 
 export enum BioFactor
 {
@@ -10,7 +10,7 @@ export enum BioFactor
     Retina              = 0x0020,
     HandGeometry        = 0x0040,
     SignatureDynamics   = 0x0080,
-    KEYSTROKE_DYNAMICS  = 0x0100,
+    KeystrokeDynamics   = 0x0100,
     LipMovement         = 0x0200,
     ThermalFaceImage    = 0x0400,
     ThermalHandImage    = 0x0800,

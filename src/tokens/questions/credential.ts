@@ -1,6 +1,7 @@
 import { Credential } from '@digitalpersona/access-management';
 import { Questions, Answers } from "./data";
 
+/**@internal */
 export class SecurityQuestions extends Credential
 {
     constructor(data: {questions?: Questions, answers?: Answers}) {

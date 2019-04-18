@@ -1,6 +1,7 @@
 import { User, JSONWebToken, Credential, IEnrollService, Ticket, CredentialId } from '@digitalpersona/access-management';
 
-export class Enroller
+/** @internal */
+export abstract class Enroller
 {
     constructor(
         protected readonly enrollService: IEnrollService,

@@ -3,7 +3,10 @@ import { Base64UrlString, Utf16, Base64Url } from '@digitalpersona/access-manage
 import { AuthenticationData, IAuthenticationClient } from '../workflows';
 import { HandshakeData, HandshakeType } from './data';
 
-// Implements the client's part of the U2F handshake protocol
+/**@internal
+ *
+ * Implements the client's part of the U2F handshake protocol.
+ */
 export class U2FClient
     implements IAuthenticationClient
 {

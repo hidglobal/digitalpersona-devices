@@ -1,9 +1,15 @@
 import { Event } from '../common';
 
+/**@internal
+ *
+ */
 export interface Handler<E> {
     (event: E): any;
 }
 
+/**@internal
+ *
+ */
 export class MultiCastEventSource
 {
     private handlers: {};

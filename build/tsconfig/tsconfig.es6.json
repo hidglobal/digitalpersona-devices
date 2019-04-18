@@ -7,7 +7,7 @@
         "importHelpers": true,
         "declaration": false,
         "emitDeclarationOnly": false,
-      },
+    },
     "exclude": [
       "src/**/*.spec.ts"
     ]

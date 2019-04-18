@@ -1,5 +1,8 @@
 import { SampleFormat, QualityCode } from './sample';
 
+/**@internal
+ *
+ */
 export enum Method {
     EnumerateDevices = 1,
     GetDeviceInfo = 2,
@@ -7,6 +10,9 @@ export enum Method {
     StopAcquisition = 4
 }
 
+/**@internal
+ *
+ */
 export enum NotificationType {
     Completed = 0,
     Error = 1,
@@ -17,32 +23,50 @@ export enum NotificationType {
     Started = 11
 }
 
+/**@internal
+ *
+ */
 export interface Response {
     Method: Method;
     Result: number;
     Data?: string;
 }
 
+/**@internal
+ *
+ */
 export interface Notification {
     Event: NotificationType;
     Device: string;
     Data?: string;
 }
 
+/**@internal
+ *
+ */
 export interface EnumerateDevicesResponse {
     DeviceCount: number;
     DeviceIDs: string;
 }
 
+/**@internal
+ *
+ */
 export interface Completed {
     SampleFormat: SampleFormat;
     Samples: string;
 }
 
+/**@internal
+ *
+ */
 export interface Error {
     uError: number;
 }
 
+/**@internal
+ *
+ */
 export interface Quality {
     Quality: QualityCode;
 }

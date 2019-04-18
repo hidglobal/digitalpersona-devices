@@ -1,11 +1,13 @@
 import { JSONWebToken, Ticket, AuthenticationStatus, User, Credential, CredentialId, Base64UrlString, Base64Url, IAuthService } from '@digitalpersona/access-management';
 import { HandshakeStep, HandshakeContext } from './handshake';
 
+/** @internal */
 export class AuthenticationData
 {
     public readonly handle: number;
     public readonly data: string;
 }
+/** @internal */
 export interface IAuthenticationClient
 {
     init(): Promise<AuthenticationData>;
@@ -13,7 +15,8 @@ export interface IAuthenticationClient
     term(handle: number): Promise<void>;
 }
 
-export class Authenticator
+/** @internal */
+export abstract class Authenticator
 {
     constructor(
         protected readonly authService: IAuthService,
