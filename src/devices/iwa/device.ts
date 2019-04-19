@@ -1,10 +1,9 @@
-﻿import { Base64UrlString } from '@digitalpersona/access-management';
+﻿import { AuthenticationData, IAuthenticationClient, Base64UrlString } from '@digitalpersona/access-management';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk'
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
 import { Method } from './messages';
 import { IWAData } from './data';
-import { AuthenticationData, IAuthenticationClient } from '../../tokens/workflows';
 
 export class WindowsAuthClient
     extends MultiCastEventSource

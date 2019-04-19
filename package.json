@@ -1,7 +1,7 @@
 {
-  "name": "@digitalpersona/device-access.js",
+  "name": "@digitalpersona/device-access",
   "globalObject": "dp.deviceAccess",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
@@ -16,27 +16,12 @@
   ],
   "keywords": [
     "DigitalPersona",
-    "authentication",
-    "identification",
-    "password",
     "fingerprints",
-    "card",
     "smartcard",
     "proximity card",
     "contactless card",
-    "face recognition",
-    "face",
-    "u2f",
-    "fido",
-    "pin",
-    "push notifications",
-    "sms",
-    "one-time password",
-    "otp",
-    "totp",
     "windows integrated authentication",
-    "wia",
-    "security questions"
+    "wia"
   ],
   "module": "./dist/es5/index.js",
   "main": "./dist/es5.bundles/index.umd.js",
@@ -67,9 +52,8 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@digitalpersona/access-management": "^0.0.14",
-    "tslib": "^1.9.3",
-    "u2f-api": "^1.0.10"
+    "@digitalpersona/access-management": "^0.0.16",
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.9",
