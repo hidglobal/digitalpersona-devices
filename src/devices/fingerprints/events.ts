@@ -1,15 +1,16 @@
 import { DeviceEvent } from '../events';
 import { SampleFormat, QualityCode } from './sample'
+import { BioSample } from '@digitalpersona/core';
 
 export class SamplesAcquired extends DeviceEvent
 {
     sampleFormat: SampleFormat;
-    samples: string;
+    samples: BioSample[];
 
-    constructor(deviceUid: string, sampleFormat: SampleFormat, samples: string) {
+    constructor(deviceUid: string, sampleFormat: SampleFormat, sampleData: string) {
         super("SamplesAcquired", deviceUid);
         this.sampleFormat = sampleFormat;
-        this.samples = samples;
+        this.samples = JSON.parse(sampleData) as BioSample[];
     }
 }
 
