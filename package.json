@@ -1,11 +1,11 @@
 {
-  "name": "@digitalpersona/device-access",
-  "globalObject": "dp.deviceAccess",
-  "version": "0.0.6",
+  "name": "@digitalpersona/devices",
+  "globalObject": "dp.devices",
+  "version": "0.1.5",
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
-  "description": "JavaScript Client for DigitalPersona Device Access API",
+  "description": "DigitalPersona Security Devices support library",
   "author": "HID Global",
   "license": "MIT",
   "maintainers": [
@@ -42,23 +42,21 @@
     "rollup": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
     "test": "karma start",
     "test-once": "karma start --single-run",
-    "test-private": "set UUT=private&& karma start",
-    "test-common": "set UUT=common&& karma start",
-    "test-fp": "set UUT=fp&& karma start",
-    "test-card": "set UUT=card&& karma start",
-    "docs": "typedoc ./src",
     "api": "api-extractor run --local --verbose",
     "api-doc": "api-documenter markdown -i ./dist/api -o ./dist/api/doc",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@digitalpersona/access-management": "^0.0.16",
+    "@digitalpersona/core": "^0.1.4",
     "tslib": "^1.9.3"
   },
+  "peerDependencies": {
+    "@digitalpersona/services": "^0.1.4"
+  },
   "devDependencies": {
+    "@digitalpersona/services": "^0.1.4",
     "@types/jasmine": "^3.3.9",
     "@types/node": "^11.12.0",
-    "fetch-mock": "^7.3.1",
     "jasmine": "^3.3.1",
     "jasmine-core": "^3.3.0",
     "karma": "^4.0.1",
@@ -74,7 +72,6 @@
     "rollup-plugin-typescript2": "^0.20.1",
     "terser": "^3.17.0",
     "tslint": "^5.14.0",
-    "typedoc": "^0.14.2",
-    "typescript": "3.3.3333"
+    "typescript": "^3.4.5"
   }
 }
