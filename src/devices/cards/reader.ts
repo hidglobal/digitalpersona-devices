@@ -6,7 +6,7 @@ import { CardInserted, CardRemoved } from './events';
 import { CardsEventSource as CardsEventSource } from './eventSource';
 import { Method, NotificationType, Notification, CardNotification, ReaderList, CardList } from "./messages";
 import { Card } from './cards'
-import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/access-management';
+import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/core';
 
 export class CardsReader
     extends MultiCastEventSource
@@ -20,8 +20,8 @@ export class CardsReader
     public onCardRemoved: Handler<CardRemoved>;
     public onCommunicationFailed: Handler<CommunicationFailed>;
 
-    public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
-    public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
+    public on<E extends Event>(event: string, handler: Handler<E>): Handler<E> { return this._on(event, handler); }
+    public off<E extends Event>(event?: string, handler?: Handler<E>): this { return this._off(event, handler); }
 
     constructor(options?: WebSdk.WebChannelOptions) {
         super();
@@ -32,7 +32,7 @@ export class CardsReader
 
     public enumerateReaders(): Promise<string[]> {
         return this.channel.send(new Request(new Command(
-                Method.EnumerateReaders
+            Method.EnumerateReaders
         )))
         .then(response => {
             const list: ReaderList = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"));
@@ -79,7 +79,7 @@ export class CardsReader
             Base64Url.fromJSON({ Reader: reader, PIN: pin || "" })
         )))
         .then(response => {
-            const data = Utf8.fromBase64Url(response.Data || "");
+            const data = JSON.parse(Utf8.fromBase64Url(response.Data || ""));
             return data;
         });
     }
@@ -90,7 +90,7 @@ export class CardsReader
             Base64Url.fromJSON({ Reader: reader, PIN: pin || "" })
         )))
         .then(response => {
-            const data = Utf8.fromBase64Url(response.Data || "");
+            const data = JSON.parse(Utf8.fromBase64Url(response.Data || ""));
             return data;
         });
     }

@@ -12,9 +12,9 @@ export interface FingerprintsEventSource
     onAcquisitionStarted: Handler<AcquisitionStarted>,
     onAcquisitionStopped: Handler<AcquisitionStopped>,
 
-    on(event: "SamplesAcquired", handler: Handler<SamplesAcquired>): this;
-    on(event: "QualityReported", handler: Handler<QualityReported>): this;
-    on(event: "ErrorOccurred", handler: Handler<ErrorOccurred>): this;
-    on(event: "AcquisitionStarted", handler: Handler<AcquisitionStarted>): this;
-    on(event: "AcquisitionStopped", handler: Handler<AcquisitionStopped>): this;
+    on(event: "SamplesAcquired", handler: Handler<SamplesAcquired>): Handler<SamplesAcquired>;
+    on(event: "QualityReported", handler: Handler<QualityReported>): Handler<QualityReported>;
+    on(event: "ErrorOccurred", handler: Handler<ErrorOccurred>): Handler<ErrorOccurred>;
+    on(event: "AcquisitionStarted", handler: Handler<AcquisitionStarted>): Handler<AcquisitionStarted>;
+    on(event: "AcquisitionStopped", handler: Handler<AcquisitionStopped>): Handler<AcquisitionStopped>;
 }

@@ -1,4 +1,4 @@
-import { Base64Url, Utf8 } from '@digitalpersona/access-management';
+import { Base64Url, Utf8 } from '@digitalpersona/core';
 import { Request, Response } from './command';
 import { MessageType, Message } from './messages';
 import 'WebSdk';

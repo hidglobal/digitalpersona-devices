@@ -6,6 +6,6 @@ export interface CardsEventSource
     onCardInserted: Handler<CardInserted>;
     onCardRemoved: Handler<CardRemoved>;
 
-    on(event: "CardInserted", handler: Handler<CardInserted>): this;
-    on(event: "CardRemoved", handler: Handler<CardRemoved>): this;
+    on(event: "CardInserted", handler: Handler<CardInserted>): Handler<CardInserted>;
+    on(event: "CardRemoved", handler: Handler<CardRemoved>): Handler<CardRemoved>;
 }

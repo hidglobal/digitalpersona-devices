@@ -1,4 +1,5 @@
-﻿import { AuthenticationData, IAuthenticationClient, Base64UrlString } from '@digitalpersona/access-management';
+﻿import { Base64UrlString } from '@digitalpersona/core';
+import { AuthenticationData, IAuthenticationClient } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk'
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
@@ -13,8 +14,8 @@ export class WindowsAuthClient
 
     public onCommunicationFailed: Handler<CommunicationFailed>;
 
-    public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
-    public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
+    public on<E extends Event>(event: string, handler: Handler<E>): Handler<E> { return this._on(event, handler); }
+    public off<E extends Event>(event?: string, handler?: Handler<E>): this { return this._off(event, handler); }
 
     constructor(options?: WebSdk.WebChannelOptions) {
         super();

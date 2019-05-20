@@ -30,6 +30,6 @@ export interface DeviceEventSource
     onDeviceConnected: Handler<DeviceConnected>;
     onDeviceDisconnected: Handler<DeviceDisconnected>;
 
-    on(event: "DeviceConnected", handler: Handler<DeviceConnected>): this;
-    on(event: "DeviceDisconnected", handler: Handler<DeviceDisconnected>): this;
+    on(event: "DeviceConnected", handler: Handler<DeviceConnected>): Handler<DeviceConnected>;
+    on(event: "DeviceDisconnected", handler: Handler<DeviceDisconnected>): Handler<DeviceDisconnected>;
 }

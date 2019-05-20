@@ -1,4 +1,4 @@
-﻿import { Base64Url, Utf8 } from '@digitalpersona/access-management';
+﻿import { Base64Url, Utf8 } from '@digitalpersona/core';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
 import { CommunicationFailed, CommunicationEventSource } from '../../common';
@@ -27,8 +27,8 @@ export class FingerprintReader
     public onAcquisitionStopped: Handler<AcquisitionStopped>;
     public onCommunicationFailed: Handler<CommunicationFailed>;
 
-    public on<E extends Event>(event: string, handler: Handler<E>): this { return this._on(event, handler); }
-    public off<E extends Event>(event: string, handler: Handler<E>): this { return this._off(event, handler); }
+    public on<E extends Event>(event: string, handler: Handler<E>): Handler<E> { return this._on(event, handler); }
+    public off<E extends Event>(event?: string, handler?: Handler<E>): this { return this._off(event, handler); }
 
     constructor(
         private readonly options?: WebSdk.WebChannelOptions,
