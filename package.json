@@ -1,7 +1,7 @@
 {
   "name": "@digitalpersona/devices",
   "globalObject": "dp.devices",
-  "version": "0.1.5",
+  "version": "0.2.1",
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
@@ -47,14 +47,14 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@digitalpersona/core": "^0.1.4",
+    "@digitalpersona/core": "^0.2.1",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
-    "@digitalpersona/services": "^0.1.4"
+    "@digitalpersona/services": "^0.2.1"
   },
   "devDependencies": {
-    "@digitalpersona/services": "^0.1.4",
+    "@digitalpersona/services": "^0.2.1",
     "@types/jasmine": "^3.3.9",
     "@types/node": "^11.12.0",
     "jasmine": "^3.3.1",

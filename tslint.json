@@ -10,5 +10,6 @@
     "interface-name": false,
     "member-ordering":false,
     "arrow-parens": false,
+    "typedef-whitespace": false
   }
 }
