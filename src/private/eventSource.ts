@@ -3,9 +3,7 @@ import { Event } from '../common';
 /**@internal
  *
  */
-export interface Handler<E> {
-    (event: E): any;
-}
+export type Handler<E> = (event: E) => any;
 
 /**@internal
  *
@@ -26,7 +24,7 @@ export class MultiCastEventSource
 
     protected _off(event?: string, handler?: Handler<Event>): this {
         if (event) {
-            var hh = this.handlers[event] as Handler<Event>[];
+            const hh = this.handlers[event] as Handler<Event>[];
             if (hh) {
                 if (handler)
                     this.handlers[event] = hh.filter(h => h !== handler);
@@ -42,12 +40,12 @@ export class MultiCastEventSource
     protected emit(event: Event): void {
         if (!event) return;
 
-        var eventName: string = event.type;
-        var unicast: Handler<Event> = this["on" + eventName];
+        const eventName: string = event.type;
+        const unicast: Handler<Event> = this["on" + eventName];
         if (unicast)
             this.invoke(unicast, event);
 
-        var multicast: Handler<Event>[] = this.handlers[eventName];
+        const multicast: Handler<Event>[] = this.handlers[eventName];
         if (multicast)
             multicast.forEach(h => this.invoke(h, event));
     }

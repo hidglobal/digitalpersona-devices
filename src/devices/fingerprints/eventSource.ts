@@ -1,7 +1,7 @@
 import { Handler } from '../../private';
 import { ErrorOccurred,
     SamplesAcquired, QualityReported,
-    AcquisitionStarted, AcquisitionStopped
+    AcquisitionStarted, AcquisitionStopped,
 } from './events';
 
 export interface FingerprintsEventSource
@@ -9,8 +9,8 @@ export interface FingerprintsEventSource
     onSamplesAcquired: Handler<SamplesAcquired>;
     onQualityReported: Handler<QualityReported>;
     onErrorOccurred: Handler<ErrorOccurred>;
-    onAcquisitionStarted: Handler<AcquisitionStarted>,
-    onAcquisitionStopped: Handler<AcquisitionStopped>,
+    onAcquisitionStarted: Handler<AcquisitionStarted>;
+    onAcquisitionStopped: Handler<AcquisitionStopped>;
 
     on(event: "SamplesAcquired", handler: Handler<SamplesAcquired>): Handler<SamplesAcquired>;
     on(event: "QualityReported", handler: Handler<QualityReported>): Handler<QualityReported>;

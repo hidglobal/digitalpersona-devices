@@ -2,13 +2,15 @@
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
 import { CommunicationFailed, CommunicationEventSource } from '../../common';
-import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events'
+import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events';
 import { ErrorOccurred,
     SamplesAcquired, QualityReported,
-    AcquisitionStarted, AcquisitionStopped
+    AcquisitionStarted, AcquisitionStopped,
 } from './events';
 import { FingerprintsEventSource } from './eventSource';
-import { Method, NotificationType, Notification, EnumerateDevicesResponse, Completed, Error, Quality } from './messages';
+import {
+    Method, NotificationType, Notification, EnumerateDevicesResponse,
+    Completed, Error, Quality } from './messages';
 import { DeviceInfo } from './device';
 import { SampleFormat } from './sample';
 
@@ -41,24 +43,24 @@ export class FingerprintReader
 
     public enumerateDevices(): Promise<string[]> {
         return this.channel.send(new Request(new Command(
-            Method.EnumerateDevices
+            Method.EnumerateDevices,
         )))
         .then(response => {
             if (!response) return [];
-            var deviceList: EnumerateDevicesResponse = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"));
+            const deviceList: EnumerateDevicesResponse = JSON.parse(Utf8.fromBase64Url(response.Data || "{}"));
             return JSON.parse(deviceList.DeviceIDs || "[]");
-        })
+        });
     }
 
     public getDeviceInfo(deviceUid: string): Promise<DeviceInfo|null> {
         return this.channel.send(new Request(new Command(
             Method.GetDeviceInfo,
-            Base64Url.fromJSON({ DeviceID: deviceUid })
+            Base64Url.fromJSON({ DeviceID: deviceUid }),
         )))
         .then(response => {
-            var deviceInfo: DeviceInfo = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
+            const deviceInfo: DeviceInfo = JSON.parse(Utf8.fromBase64Url(response.Data || "null"));
             return deviceInfo;
-        })
+        });
     }
 
     public startAcquisition(sampleFormat: SampleFormat, deviceUid?: string): Promise<void> {
@@ -66,8 +68,8 @@ export class FingerprintReader
             Method.StartAcquisition,
             Base64Url.fromJSON({
                 DeviceID: deviceUid ? deviceUid : "00000000-0000-0000-0000-000000000000",
-                SampleType: sampleFormat
-            })
+                SampleType: sampleFormat,
+            }),
         )))
         .then(() => {});
     }
@@ -76,8 +78,8 @@ export class FingerprintReader
         return this.channel.send(new Request(new Command(
             Method.StopAcquisition,
             Base64Url.fromJSON({
-                DeviceID: deviceUid ? deviceUid : "00000000-0000-0000-0000-000000000000"
-            })
+                DeviceID: deviceUid ? deviceUid : "00000000-0000-0000-0000-000000000000",
+            }),
         )))
         .then(() => {});
     }
@@ -87,7 +89,7 @@ export class FingerprintReader
     }
 
     private processNotification(notification: Notification): void {
-        switch(notification.Event) {
+        switch (notification.Event) {
             case NotificationType.Completed:
                 const completed: Completed = JSON.parse(Utf8.fromBase64Url(notification.Data || ""));
                 return this.emit(new SamplesAcquired(notification.Device, completed.SampleFormat, completed.Samples));
@@ -106,7 +108,7 @@ export class FingerprintReader
             case NotificationType.Started:
                 return this.emit(new AcquisitionStarted(notification.Device));
             default:
-                console.log(`Unknown notification: ${notification.Event}`)
+                console.log(`Unknown notification: ${notification.Event}`);
         }
     }
 }

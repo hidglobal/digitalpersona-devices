@@ -3,7 +3,7 @@
  */
 export enum MessageType {
     Response = 0,
-    Notification = 1
+    Notification = 1,
 }
 
 /**@internal

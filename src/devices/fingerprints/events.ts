@@ -1,11 +1,11 @@
 import { DeviceEvent } from '../events';
-import { SampleFormat, QualityCode } from './sample'
+import { SampleFormat, QualityCode } from './sample';
 import { BioSample } from '@digitalpersona/core';
 
 export class SamplesAcquired extends DeviceEvent
 {
-    sampleFormat: SampleFormat;
-    samples: BioSample[];
+    public sampleFormat: SampleFormat;
+    public samples: BioSample[];
 
     constructor(deviceUid: string, sampleFormat: SampleFormat, sampleData: string) {
         super("SamplesAcquired", deviceUid);
@@ -16,7 +16,7 @@ export class SamplesAcquired extends DeviceEvent
 
 export class QualityReported extends DeviceEvent
 {
-    quality: QualityCode;
+    public quality: QualityCode;
 
     constructor(deviceUid: string, quality: QualityCode) {
         super("QualityReported", deviceUid);
@@ -26,7 +26,7 @@ export class QualityReported extends DeviceEvent
 
 export class ErrorOccurred extends DeviceEvent
 {
-    error: number;
+    public error: number;
 
     constructor(deviceUid: string, error: number) {
         super("ErrorOccurred", deviceUid);

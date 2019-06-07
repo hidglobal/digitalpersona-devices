@@ -29,7 +29,7 @@ export class Channel
                 request.timer = window.setTimeout(() => {
                     if (request.timer) try {
                         request.reject(new Error("Timeout"));
-                    } catch(e){}
+                    } catch (e){}
                 }, timeout);
             }
             });
@@ -50,7 +50,7 @@ export class Channel
         this.pending = [];
         if (this.onCommunicationError) try {
             this.onCommunicationError();
-        } catch(e){}
+        } catch (e){}
     }
 
     private onDataReceivedTxt(data: string): void {
@@ -75,7 +75,7 @@ export class Channel
             const notification = JSON.parse(Utf8.fromBase64Url(message.Data || ""));
             if (this.onNotification) try {
                 this.onNotification(notification);
-            } catch(e){}
+            } catch (e){}
         } else
             console.log(`Unknown message type: ${message.Type}`);
     }
@@ -86,11 +86,11 @@ export class Channel
                 this.webChannel.sendDataTxt(Base64Url.fromJSON(req.command));
                 items[i].sent = true;
             }
-        })
+        });
     }
 
     private findRequest(response: Response): Request | null {
-        for (var i = 0; i < this.pending.length; i++) {
+        for (let i = 0; i < this.pending.length; i++) {
             const request = this.pending[i];
             if (request.sent && (request.command.Method === response.Method)) {
                 this.pending.splice(i, 1);
@@ -100,4 +100,3 @@ export class Channel
         return null;
     }
 }
-

@@ -1,5 +1,5 @@
 import { Handler } from '../../private';
-import { CardInserted, CardRemoved } from './events'
+import { CardInserted, CardRemoved } from './events';
 
 export interface CardsEventSource
 {

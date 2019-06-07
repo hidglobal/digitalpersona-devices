@@ -2,7 +2,7 @@ export enum SampleFormat {
     Raw = 1,
     Intermediate = 2,
     Compressed = 3,
-    PngImage = 5
+    PngImage = 5,
 }
 
 export enum QualityCode {
@@ -30,5 +30,5 @@ export enum QualityCode {
     WetFinger = 21,
     FakeFinger = 22,
     TooSmall = 23,
-    RotatedTooMuch = 24
+    RotatedTooMuch = 24,
 }

@@ -1,7 +1,7 @@
 ﻿import { Base64UrlString } from '@digitalpersona/core';
 import { AuthenticationData, IAuthenticationClient } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
-import { Command, Request, Channel } from '../websdk'
+import { Command, Request, Channel } from '../websdk';
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
 import { Method } from './messages';
 import { IWAData } from './data';
@@ -25,10 +25,10 @@ export class WindowsAuthClient
 
     public init(): Promise<AuthenticationData> {
         return this.channel.send(new Request(new Command(
-            Method.Init
+            Method.Init,
         )), 3000)
         .then(response => {
-            var data: IWAData = JSON.parse(response.Data || "{}");
+            const data: IWAData = JSON.parse(response.Data || "{}");
             return { handle: data.Handle, data: data.Data };
         });
     }
@@ -36,18 +36,18 @@ export class WindowsAuthClient
     public continue(handle: number, data: string): Promise<Base64UrlString> {
         return this.channel.send(new Request(new Command(
             Method.Continue,
-            JSON.stringify({ Handle: handle, Data: data})
+            JSON.stringify({ Handle: handle, Data: data}),
         )))
         .then(response => {
-            var data: IWAData = JSON.parse(response.Data || "{}");
-            return data.Data;
+            const d: IWAData = JSON.parse(response.Data || "{}");
+            return d.Data;
         });
     }
 
     public term(handle: number): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.Term,
-            JSON.stringify({ Handle: handle })
+            JSON.stringify({ Handle: handle }),
         )))
         .then(() => {});
     }

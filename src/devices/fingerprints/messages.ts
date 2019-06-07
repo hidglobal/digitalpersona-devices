@@ -7,7 +7,7 @@ export enum Method {
     EnumerateDevices = 1,
     GetDeviceInfo = 2,
     StartAcquisition = 3,
-    StopAcquisition = 4
+    StopAcquisition = 4,
 }
 
 /**@internal
@@ -20,7 +20,7 @@ export enum NotificationType {
     Connected = 3,
     Quality = 4,
     Stopped = 10,
-    Started = 11
+    Started = 11,
 }
 
 /**@internal
@@ -70,4 +70,3 @@ export interface Error {
 export interface Quality {
     Quality: QualityCode;
 }
-

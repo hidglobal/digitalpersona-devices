@@ -1,7 +1,7 @@
 export enum CardType {
     Contact = 1,
     Contactless = 2,
-    Proximity = 4
+    Proximity = 4,
 }
 
 export enum CardAttributes {
@@ -9,7 +9,7 @@ export enum CardAttributes {
     SupportsUID = 2,
     IsPKI = 0x00010000,
     IsPIV = 0x00020000,
-    IsReadOnly = 0x80000000
+    IsReadOnly = 0x80000000,
 }
 
 export interface Card {
