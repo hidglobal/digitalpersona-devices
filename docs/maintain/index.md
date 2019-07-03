@@ -1,4 +1,4 @@
-# Information for developers
+# Information for library maintainers
 
 ## Recommended Tools
 
@@ -19,9 +19,9 @@ work to the whole world.
 
 ## Development Guides
 
-* [Coding](coding.md)
-* [Building](building.md)
-* [Testing](testing.md)
-* [Documenting](documenting.md)
-* [Versioning](versioning.md)
-* [Deployment](deployment.md)
+* [Code](code.md)
+* [Build](build.md)
+* [Test](test.md)
+* [Document](document.md)
+* [Version](version.md)
+* [Deploy](deploy.md)

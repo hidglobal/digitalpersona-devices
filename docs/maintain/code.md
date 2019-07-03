@@ -1,6 +1,6 @@
 # Coding Guides
 
-The library uses the TypeScript as a main language. It is transpiled to Javascript (`es5`, `es6` and `commonjs` platforms).
+The library uses the TypeScript as a main language. It is transpiled to Javascript (`es5` and `es6` platforms).
 
 ## Library size
 

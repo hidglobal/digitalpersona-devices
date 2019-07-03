@@ -3,7 +3,7 @@
 ## Running tests
 
 To run unit tests:
-* from terminal: run `npm run-script test`
+* from terminal: run `npm run test`
 * from VS Code: menu `Terminal` > `Run Task...` > [npm: test]
 * if you have installed the [NPM Support for VS Code](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
   plugin: press `Ctrl-R, T`.
