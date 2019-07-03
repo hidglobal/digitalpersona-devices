@@ -45,7 +45,7 @@
    *
    * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
    */
-  "mainEntryPointFilePath": "./dist/typings/index.d.ts",
+  "mainEntryPointFilePath": "<projectFolder>/dist/typings/index.d.ts",
 
   /**
    * Determines how the TypeScript compiler engine will be invoked by API Extractor.
@@ -122,7 +122,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/etc/"
      */
-    "reportFolder": "./dist/api/",
+    "reportFolder": "<projectFolder>/docs/api/",
 
     /**
      * Specifies the folder where the temporary report file is written.  The file name portion is determined by
@@ -158,7 +158,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/temp/<unscopedPackageName>.api.json"
      */
-    "apiJsonFilePath": "./dist/api/<unscopedPackageName>.api.json"
+    "apiJsonFilePath": "<projectFolder>/dist/api/<unscopedPackageName>.api.json"
   },
 
   /**
@@ -221,7 +221,7 @@
      *
      * DEFAULT VALUE: true
      */
-    // "enabled": true,
+    "enabled": true,
 
     /**
      * Specifies where the TSDoc metadata file should be written.
@@ -236,7 +236,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<lookup>"
      */
-    // "tsdocMetadataFilePath": "<projectFolder>/dist/tsdoc-metadata.json"
+    "tsdocMetadataFilePath": "<projectFolder>/dist/api/tsdoc-metadata.json"
   },
 
   /**

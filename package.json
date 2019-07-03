@@ -2,6 +2,7 @@
   "name": "@digitalpersona/devices",
   "globalObject": "dp.devices",
   "version": "0.2.1",
+  "os": [ "win32" ],
   "publishConfig": {
     "registry": "http://localhost:4873"
   },
@@ -42,18 +43,19 @@
     "rollup": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
     "test": "karma start",
     "test-once": "karma start --single-run",
-    "api": "api-extractor run --local --verbose",
-    "api-doc": "api-documenter markdown -i ./dist/api -o ./dist/api/doc",
+    "api": "mkdirp ./docs/api/ && npx api-extractor run --local --verbose",
+    "api-doc": "tsc && npm run api && npx api-documenter markdown -i ./dist/api -o ./docs/api",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@digitalpersona/core": "^0.2.1",
     "tslib": "^1.9.3"
   },
   "peerDependencies": {
+    "@digitalpersona/core": "^0.2.3",
     "@digitalpersona/services": "^0.2.1"
   },
   "devDependencies": {
+    "@digitalpersona/core": "^0.2.3",
     "@digitalpersona/services": "^0.2.1",
     "@types/jasmine": "^3.3.9",
     "@types/node": "^11.12.0",
