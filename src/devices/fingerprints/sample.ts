@@ -1,10 +1,20 @@
+/**
+ * A fingerprint sample format.
+ */
 export enum SampleFormat {
+    /** A raw fingerprint image (bitmap). */
     Raw = 1,
+    /** A fingerprint image encoded into an intermediate format. */
     Intermediate = 2,
+    /** A compressed fingerprint image (e.q. JPEG2000, WSQ). */
     Compressed = 3,
+    /** A Portable Network Graphics (PNG) format. */
     PngImage = 5,
 }
 
+/**
+ * A figerprint image quality.
+ */
 export enum QualityCode {
     Good = 0,
     NoImage = 1,

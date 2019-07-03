@@ -6,23 +6,71 @@ import { CommunicationEventSource, CommunicationFailed  } from '../../common';
 import { Method } from './messages';
 import { IWAData } from './data';
 
+/**
+ * Integrated Windows Authentication API.
+ * An instance of this class allows internet browsers to authenticate in DigitalPersona servers
+ * using Integrated Windows Authentication.
+ * The IWA API uses DigitalPersona WebSDK to communicate with Windwows operating system and extract
+ * Windows account data for authentication.
+ */
 export class WindowsAuthClient
     extends MultiCastEventSource
-    implements CommunicationEventSource, IAuthenticationClient
+    implements IAuthenticationClient // , CommunicationEventSource
 {
+    /** A WebSdk channel. */
     private channel: Channel;
 
-    public onCommunicationFailed: Handler<CommunicationFailed>;
-
-    public on<E extends Event>(event: string, handler: Handler<E>): Handler<E> { return this._on(event, handler); }
-    public off<E extends Event>(event?: string, handler?: Handler<E>): this { return this._off(event, handler); }
-
+    /**
+     * Constructs a new IWA API object.
+     * @param options - options for the `WebSdk` channel.
+     */
     constructor(options?: WebSdk.WebChannelOptions) {
         super();
         this.channel = new Channel("wia", options);
         this.channel.onCommunicationError = this.onConnectionFailed.bind(this);
     }
 
+    /** A uni-cast event handler for the {@link CommunicationFailed} event. */
+    public onCommunicationFailed: Handler<CommunicationFailed>;
+
+    /**
+     * Adds an event handler for the event.
+     * This is a multicast subscription, i.e. many handlers can be registered at once.
+     *
+     * @param event - a name of the event to subscribe, e.g. "CommunicationFailed"
+     * @param handler - an event handler.
+     * @returns an event handler reference.
+     * Store the reference and pass it to the {@link WindowsAuthClient.off} to unsubscribe from the event.
+     *
+     * @example
+     * ```
+     * class IntegratedWindowsAuthComponent
+     * {
+     *     private client: WindowsAuthClient;
+     *
+     *     private onCommunicationFailed = (event: CommunicationFailed) => { ... }
+     *
+     *     public $onInit() {
+     *         this.client = new WindowsAuthClient();
+     *         this.client.on("CommunicationFailed", this.onCommunicationFailed);
+     *     }
+     *     public $onDestroy() {
+     *         this.client.off("CommunicationFailed", this.onCommunicationFailed);
+     *         // alternatively, call this.reader.off() to unsubscribe from all events at once.
+     *         delete this.client;
+     *     }
+     * }
+     * ```
+     */
+    public on<E extends Event>(event: string, handler: Handler<E>): Handler<E> { return this._on(event, handler); }
+
+    /** Deletes an event handler for the event.
+     * @param event - a name of the event to subscribe.
+     * @param handler - an event handler added with the {@link WindowsAuthClient.on} method.
+     */
+    public off<E extends Event>(event?: string, handler?: Handler<E>): this { return this._off(event, handler); }
+
+    /** Used internally. Do not call this method. */
     public init(): Promise<AuthenticationData> {
         return this.channel.send(new Request(new Command(
             Method.Init,
@@ -33,6 +81,7 @@ export class WindowsAuthClient
         });
     }
 
+    /** Used internally. Do not call this method. */
     public continue(handle: number, data: string): Promise<Base64UrlString> {
         return this.channel.send(new Request(new Command(
             Method.Continue,
@@ -44,14 +93,16 @@ export class WindowsAuthClient
         });
     }
 
+    /** Used internally. Do not call this method. */
     public term(handle: number): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.Term,
             JSON.stringify({ Handle: handle }),
         )))
-        .then(() => {});
+        .then();
     }
 
+    /** Converts WebSdk connectivity error to an IWA API event. */
     private onConnectionFailed(): void {
         this.emit(new CommunicationFailed());
     }

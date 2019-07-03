@@ -12,12 +12,9 @@ export class MultiCastEventSource
 {
     private handlers: {} = {};
 
-    protected _on(event: string, handler: Handler<Event>): Handler<Event> {
-        // TODO: use WeakMaps instead of Arrays to prevent a memory leak when subscribers forgets to unsubscribe.
-        // With the current implementation subscribers MUST unsubscribe, or handlers will never be garbage-collected!
-
-        if (!this.handlers[event])
-            this.handlers[event] = [];
+    protected _on(event: string, handler: Handler<Event>): Handler<Event>
+    {
+        this.handlers[event] = this.handlers[event] || [];
         this.handlers[event].push(handler);
         return handler;
     }

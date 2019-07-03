@@ -4,6 +4,9 @@ import { ErrorOccurred,
     AcquisitionStarted, AcquisitionStopped,
 } from './events';
 
+/** @internal
+ * A fingerprint reader event source.
+ */
 export interface FingerprintsEventSource
 {
     onSamplesAcquired: Handler<SamplesAcquired>;

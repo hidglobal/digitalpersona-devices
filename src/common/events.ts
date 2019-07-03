@@ -1,3 +1,6 @@
+/**
+ * A base class for DigitalPersona events.
+ */
 export class Event
 {
     public type: string;
@@ -7,6 +10,9 @@ export class Event
     }
 }
 
+/**
+ * An event signaling a problem with a device channel communication.
+ */
 export class CommunicationFailed extends Event
 {
     constructor() {
