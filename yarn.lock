@@ -18,20 +18,19 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@digitalpersona/core@^0.2.1":
-  version "0.2.1"
-  resolved "http://localhost:4873/@digitalpersona%2fcore/-/core-0.2.1.tgz#86509a7c0b698f8e5ccb226b27f1d886a787f87d"
-  integrity sha512-uzTTOgiBQxBqSyf7HNsdSVmtT0N0y1u0brSPbmgeVV+86k/ThMLGPVG2mfg2V5KLNdkH/w+x8hh13DyDGTvKbQ==
+"@digitalpersona/core@^0.2":
+  version "0.2.3"
+  resolved "http://localhost:4873/@digitalpersona%2fcore/-/core-0.2.3.tgz#53c6b3c0c86b18ecc07e7fef2d1efe919c0dc508"
+  integrity sha512-SwD3hnL8XTXK3Dpn5wvleSP3ATFI8FB3HQ4t3CS3Apbu55YDHblFH+8wAs0o0YJ00RpUp/dztgDRkGKzmjDz9Q==
   dependencies:
     tslib "^1.9.3"
-    u2f-api "^1.0.10"
 
-"@digitalpersona/services@^0.2.1":
-  version "0.2.1"
-  resolved "http://localhost:4873/@digitalpersona%2fservices/-/services-0.2.1.tgz#35bf80c757d0cf7bb0f16de8ec919e8f79031e7f"
-  integrity sha512-o0psqyl0X00ykW/+k0ETPwvQwuwUIoPk+mejaYSbwQEbIvmpABShnWlQxiVxFqpo9ZxvkilG4ZNk33EVdJ8QSA==
+"@digitalpersona/services@^0.2":
+  version "0.2.3"
+  resolved "http://localhost:4873/@digitalpersona%2fservices/-/services-0.2.3.tgz#8fb0d496d1046d59bad919288fba1c4667e5c90c"
+  integrity sha512-P6++rl0zpZ+cJQvwptdoult0938b+uvPdtxR7iPP4VvcyKbQwoIJuOVmwZgPRyeDfQapwKE1F4bhUF96ZJKrbA==
   dependencies:
-    "@digitalpersona/core" "^0.2.1"
+    "@digitalpersona/core" "^0.2"
     tslib "^1.9.3"
 
 "@types/estree@0.0.39":
@@ -3190,11 +3189,6 @@ typescript@^3.4.5:
   version "3.4.5"
   resolved "http://localhost:4873/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
   integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
-
-u2f-api@^1.0.10:
-  version "1.0.10"
-  resolved "http://localhost:4873/u2f-api/-/u2f-api-1.0.10.tgz#38d898a72daa6362040b27e37c8286d96cb8d320"
-  integrity sha512-0Zh+IqM2l6xaA/IUJDT9WwoEM6nwPx6ive4flVVYEfzzgXIrKFRaenieItsEkbXIgOZEw13nO3o3oLtSDOyesA==
 
 uglify-js@^3.1.4:
   version "3.5.4"
