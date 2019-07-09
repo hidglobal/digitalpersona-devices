@@ -1,0 +1,18 @@
+﻿<ng-form id="iwa_form" name="iwa_form" class="cm-credential-plugin" ng-controller="WinAuthController">
+    <fieldset>
+        <div class="form-group" ng-class="{'input-group': model.verifyMode}">
+            <input id="iwa_username" type="text" name="iwa_username" class="form-control" placeholder="{{'sharedUsernamePlaceholder' | translate}}"
+                   ng-model="model.username" ng-disabled="model.verifyMode || isLoading" maxlength="100" />
+            <span class="input-group-btn" ng-if="model.verifyMode">
+                <input ng-click="cancelLogin(model.username)" type="button" class="btn btn-cancel" value="{{'Cancel' | translate}}" />
+            </span>
+        </div>
+        <div class="form-group login-input-container">
+            <h5><img ng-src="{{extraData.appRoot}}/content/assets/iwa.png" />{{'loginLocalTitle' | translate:'{ value: "Windows Authentication" }'}}</h5>
+            <div class="form-group alert alert-info fadeIn fadeIn-delay">
+                <i class="fa fa-info" aria-hidden="true"></i>
+                <span>{{'iwaVerified' | translate}}</span>
+            </div>
+        </div>
+    </fieldset>
+</ng-form>
