@@ -1,6 +1,15 @@
-# Testing
+---
+layout: default
+title: Testing
+has_toc: false
+parent: Library Maintenance
+nav_order: 3  
+---
+{% include header.html %}
 
-## Running tests
+## Testing
+
+### Running tests
 
 To run unit tests:
 * from terminal: run `npm run test`
@@ -8,7 +17,7 @@ To run unit tests:
 * if you have installed the [NPM Support for VS Code](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
   plugin: press `Ctrl-R, T`.
 
-## Writing tests
+### Writing tests
 
 For unit tests, we use following tools:
 * [Karma](https://karma-runner.github.io/) as a test runner

@@ -1,0 +1,6 @@
+name: DigitalPersona Device Access API
+shortName: DPAM Devices API
+git: 'https://github.com/hidglobal'
+repo: digitalpersona-devices
+package: '@digitalpersona/devices'
+api: devices

@@ -1,0 +1,14 @@
+<h5>
+    <a href="{{ site.url }}/{{- site.data.product.repo -}}">
+        {{- site.data.product.name | replace: " ", "&nbsp;" -}}
+    </a>
+    <span>&ensp;/&nbsp;</span>
+    <a href="{{ site.url }}/{{- site.data.lib.repo -}}">
+        {{- site.data.lib.name | replace: " ", "&nbsp;" -}}
+    </a>
+    <span>&ensp;/&nbsp;</span>
+    <span>
+        {{- page.title | replace: " ", "&nbsp;" -}}
+    </span>
+</h5>
+{% include logo.html %}

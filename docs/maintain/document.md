@@ -1,4 +1,13 @@
-# Documenting Guidelines
+---
+layout: default
+title: Documenting Guidelines
+has_toc: false
+parent: Library Maintenance
+nav_order: 4  
+---
+{% include header.html %}
+
+## Documenting Guidelines
 
 All development documentation must be a part of the project source base,
 so they are
@@ -21,4 +30,3 @@ To learn more about the markdown syntax, refer to these links:
  - [Markdown Basics](http://daringfireball.net/projects/markdown/basics)
  - [GitHub Flavored Markdown](http://github.github.com/github-flavored-markdown/) 
  - [markdown at wikipedia](https://secure.wikimedia.org/wikipedia/en/wiki/Markdown)
-

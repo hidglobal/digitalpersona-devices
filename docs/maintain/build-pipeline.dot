@@ -1,21 +1,24 @@
 digraph {
+    layout=dot;
     rankdir=LR;
     compound=true;
     concentrate=true;
-    nodesep=1;
-    ranksep=1.5;
+    nodesep=0.2;
+    ranksep=0.2;
+    splines=true;
     label="Build pipeline"
     graph[
-        style=dashed
-        fontname="Lucida Console"; fontsize=10;
+        style=dashed; color=gray;
+        fontname="Lucida Console"; fontsize=10; fontcolor=black;
         labelloc=top; labeljust=left;
     ];
     node [
-        shape=record;
-        fontname="Lucida Console"; fontsize=10
+        shape=record; color=lightgray;
+        fontname="Lucida Console"; fontsize=10; fontcolor=black;
     ];
     edge [
-        fontname="Arial"; fontsize=9;
+        color="#8888FF";
+        fontname="Arial"; fontsize=10; fontcolor=darkblue;
     ]
     subgraph cluster_src {
         label="src/"
@@ -35,20 +38,10 @@ digraph {
             <es5> es5.bundles/
             |<es6> es6.bundles/
         "];
-        typings [ label="
-            <typings> typings/
-        "];
+        typings [ label="typings/"];
         api [ label="
             <api> api/
-        "];
-    }
-
-    subgraph cluster_docs {
-        label="docs/";
-        docs [ label="
-            <api> api/
-            |<use> use/
-            |<maintain> maintain/
+            |<docs> api/docs/
         "];
     }
 
@@ -65,6 +58,6 @@ digraph {
     { src:ts, src:spec } -> test:karma [ label="test" ];
     out:es5 -> bundles:es5 [ label="rollup-es5-*"]
     out:es6 -> bundles:es6 [ label="rollup-es6-*"]
-    api:api -> docs:api [ label="api-doc"; ];
+    api:api:e -> api:docs:e [ label="api-doc"; ];
 
 }
