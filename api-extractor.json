@@ -122,7 +122,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/etc/"
      */
-    "reportFolder": "<projectFolder>/docs/api/",
+    "reportFolder": "<projectFolder>/dist/api/",
 
     /**
      * Specifies the folder where the temporary report file is written.  The file name portion is determined by
@@ -182,7 +182,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
      */
-    // "untrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>.d.ts",
+    // "untrimmedFilePath": "<projectFolder>/dist/api/<unscopedPackageName>.d.ts",
 
     /**
      * Specifies the output path for a .d.ts rollup file to be generated with trimming for a "beta" release.
@@ -194,7 +194,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: ""
      */
-    // "betaTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-beta.d.ts",
+    // "betaTrimmedFilePath": "<projectFolder>/dist/api/<unscopedPackageName>-beta.d.ts",
 
 
     /**
@@ -209,7 +209,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: ""
      */
-    // "publicTrimmedFilePath": "<projectFolder>/dist/<unscopedPackageName>-public.d.ts",
+    // "publicTrimmedFilePath": "<projectFolder>/dist/api/<unscopedPackageName>-public.d.ts",
   },
 
   /**

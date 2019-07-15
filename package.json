@@ -3,8 +3,12 @@
   "globalObject": "dp.devices",
   "version": "0.2.3",
   "os": [ "win32" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hidglobal/digitalpersona-devices"
+  },
   "publishConfig": {
-    "registry": "http://localhost:4873"
+    "access": "public"
   },
   "description": "DigitalPersona Security Devices support library",
   "author": "HID Global",
@@ -12,7 +16,7 @@
   "maintainers": [
     {
       "name": "Andrey Bronnikov",
-      "email": "andrey.bronnikov@hidgroup.com"
+      "email": "Andrey.Bronnikov@hidglobal.com"
     }
   ],
   "keywords": [
@@ -43,8 +47,9 @@
     "rollup": "npm run rollup-es5 && npm run rollup-es5-min && npm run rollup-es6 && npm run rollup-es6-min",
     "test": "karma start",
     "test-once": "karma start --single-run",
-    "api": "mkdirp ./docs/api/ && npx api-extractor run --local --verbose",
-    "api-doc": "tsc && npm run api && npx api-documenter markdown -i ./dist/api -o ./docs/api",
+    "api": "npx api-extractor run --local --verbose",
+    "api-doc": "npx api-documenter markdown -i ./dist/api -o ./dist/api/docs",
+    "api-all": "tsc && npm run api && npm run api-doc",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -53,23 +58,26 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.9",
-    "@types/node": "^11.12.0",
-    "jasmine": "^3.3.1",
-    "jasmine-core": "^3.3.0",
-    "karma": "^4.0.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^2.0.1",
-    "karma-typescript": "^4.0.0",
-    "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.3",
-    "rollup": "^1.6.0",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-terser": "^4.0.4",
-    "rollup-plugin-typescript2": "^0.20.1",
-    "terser": "^3.17.0",
-    "tslint": "^5.14.0",
-    "typescript": "^3.4.5"
+    "@types/jasmine": "^3.3",
+    "@types/node": "^11.12",
+    "jasmine": "^3.3",
+    "jasmine-core": "^3.3",
+    "karma": "^4.0",
+    "karma-chrome-launcher": "^2.2",
+    "karma-ie-launcher": "^1.0",
+    "karma-jasmine": "^2.0",
+    "karma-typescript": "^4.0",
+    "mkdirp": "^0.5",
+    "rimraf": "^2.6",
+    "rollup": "^1.6",
+    "rollup-plugin-node-resolve": "^4.0",
+    "rollup-plugin-terser": "^4.0",
+    "rollup-plugin-typescript2": "^0.20",
+    "terser": "^3.17",
+    "tslint": "^5.14",
+    "typescript": "^3.4"
+  },
+  "resolutions": {
+    "lodash": "^4.17.13"
   }
 }
