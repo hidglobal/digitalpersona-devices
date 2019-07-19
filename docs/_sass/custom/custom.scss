@@ -1,0 +1,59 @@
+$root-font-size: 16px;         // Base font-size for rems
+// $body-line-height: 1.4;
+// $body-heading-line-height: 1.15;
+$mono-font-family: Lucida Console, monospace;
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.upcase {
+    text-transform: uppercase;
+}
+
+.page-content {
+    h1, h2, h3, h4, h5, h6 {
+        text-transform: none !important;
+    }
+    h1 {
+        font-size: 2em !important;
+        line-height: 50% !important;
+        border-bottom: 1px solid #DEDEDE !important;
+    }
+    h2 {
+        font-size: 1.8em !important;
+        line-height: 25% !important;
+    }
+    h3 {
+        font-size: 1.6em !important;
+        line-height: 15% !important;
+    }
+    h4 {
+        font-size: 1.4em !important;
+        line-height: 12% !important;
+        text-transform: uppercase !important;
+    }
+    h5 {
+        font-size: 1.2em !important;
+        line-height: 10% !important;
+        font-weight: bold;
+    }
+    h6 {
+        font-size: 1em !important;
+        line-height: 10% !important;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    code {
+        font-family: Lucida Console, monospace;
+        font-size: 14px;
+    }
+    .highlight code {
+        line-height: 1.0 !important;
+    }
+
+    .breadcrumb-nav-list {
+        padding-left: 0;
+    }
+}
