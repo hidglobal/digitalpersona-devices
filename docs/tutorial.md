@@ -207,7 +207,7 @@ class CardsSigninControl
             {
                 case CardType.Contact: {
                     const pin = await this.promptPIN();
-                    const cardData = await this.reader.getCardAuthData(this.card.Reader, this.pin);
+                    const cardData = await this.reader.getCardAuthData(this.card.Reader, pin);
                     const api = new SmartCardAuth( <auth service endpoint URL> );
                     const token = await api.authenticate(this.identity, cardData);
                     this.notifyOnToken(token);
