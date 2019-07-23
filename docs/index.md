@@ -5,13 +5,18 @@ has_toc: false
 nav_order: 1  
 ---
 {% include header.html %}
+<BR>  
 
-# JavaScript Client for DigitalPersona Device Access
+# Overview
+{% include dpam-intro.md %}
 
 {% include websdk-intro.md %}
 
-This library communicates with the DP WebSDK agent via a secure message channel,
-allowing to implement composite authentication on web pages.
+As a part of {{ site.data.product.shortName }}, the {{ site.data.lib.name }} library
+[[{{ site.data.lib.package }}]({{ site.data.lib.npm }})]
+provides Typescript/Javascript classes and functions allowing to communicate with authentication 
+devices such as fingerprint readers and card readers from web browser. The secure communication 
+channel is provided by DigitalPersona WebSDK agent.
 
 ## External dependencies
 
@@ -22,7 +27,7 @@ in a browser.
 
 ## Requirements
 
-{% include reqs/platforms.md %}
+{% include reqs/browsers.md %}
 
 {% include reqs/languages.md %}
 
@@ -34,12 +39,13 @@ in a browser.
 
 {% include shims/websocket.md %}
 
-### Node JS Support
+### Node JS support
 
 This library does not support Node JS.
 
-## Additional documentation:
+## Additional documentation
 
 * [Tutorial](./tutorial.md)
 * [How-to](./how-to.md)
 * [Reference](./reference.md)
+* [Library Maintenance](./maintain/index.md)

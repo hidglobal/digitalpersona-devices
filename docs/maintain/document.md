@@ -2,29 +2,23 @@
 layout: default
 title: Documenting Guidelines
 has_toc: false
-parent: Library Maintenance
-nav_order: 4  
+nav_exclude: true
 ---
 {% include header.html %}
 
-## Documenting Guidelines
+# Documenting Guidelines
 
-All development documentation must be a part of the project source base,
-so they are
-- immediately accessible to developers cloning the repository
-  (no need in external document hosting like Confluence)
-- has a full history tracking
-- documents still can be referred and linked from other web pages
-  via TFS web interface
+All development documentation must be a part of the project source base so that they:
+- are immediately accessible to developers cloning the repository, i.e. not requiring external document hosting on platforms such as Confluence.
+- have full history tracking.
+- can easily be referred to and linked from other web pages via the TFS web interface.
 
-Documents preferrable format is Markdown:
-- it is an enriched text format, so developers can easily see diffs in Git
-- it remains readable in any text viewer, even lacking Markdown support.
-- it integrates well with the TFS web interface. The `Readme.md` file is a
-  default documentation enry point in TFS repositories and automaticaly
-  shows up when open TFS web repos in a browser.
+The preferrable format for the documentation is Markdown.
+- It is an enriched text format, so developers can easily see diffs in Git.
+- It remains readable in any text viewer, even those lacking specific Markdown support.
+- It integrates well with the TFS web interface. The `Readme.md` file is a default documentation enry point in TFS repositories and automatically displays when TFS repos are opened in a web browser.
 
-To learn more about the markdown syntax, refer to these links:
+To learn more about the Markdown syntax, refer to these links.
 
  - [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax)
  - [Markdown Basics](http://daringfireball.net/projects/markdown/basics)

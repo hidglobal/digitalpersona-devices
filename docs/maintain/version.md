@@ -2,14 +2,13 @@
 layout: default
 title: Versioning Guidelines
 has_toc: false
-parent: Library Maintenance
-nav_order: 5  
+nav_exclude: true
 ---
 {% include header.html %}
 
-## Package Versioning Guidelines
+# Package Versioning Guidelines
 
-### Semantic Versioning
+## Semantic Versioning
 
 [Learn](https://semver.org/spec/v2.0.0.html) and follow strictly the SemVer schema:
 
