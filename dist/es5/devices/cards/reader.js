@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
 import { CommunicationFailed } from '../../common';
@@ -12,7 +12,7 @@ import { Utf8, Base64Url, Base64, Utf16 } from '@digitalpersona/core';
  * The card reader API uses DigitalPersona WebSDK to communicate with card reader drivers and hardware.
  */
 var CardsReader = /** @class */ (function (_super) {
-    tslib_1.__extends(CardsReader, _super);
+    __extends(CardsReader, _super);
     /**
      * Constructs a new card reader API object.
      * @param options - options for the `WebSdk` channel.

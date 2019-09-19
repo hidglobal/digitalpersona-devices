@@ -1,7 +1,8 @@
+import { AuthenticationHandle } from "@digitalpersona/services";
 /**@internal
  *
  */
 export interface IWAData {
-    Handle: number;
+    Handle: AuthenticationHandle;
     Data: string;
 }

@@ -1,5 +1,5 @@
 ﻿import { Base64UrlString } from '@digitalpersona/core';
-import { AuthenticationData, IAuthenticationClient } from '@digitalpersona/services';
+import { AuthenticationData, IAuthenticationClient, AuthenticationHandle } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
 import { CommunicationEventSource, CommunicationFailed  } from '../../common';
@@ -82,7 +82,7 @@ export class WindowsAuthClient
     }
 
     /** Used internally. Do not call this method. */
-    public continue(handle: number, data: string): Promise<Base64UrlString> {
+    public continue(handle: AuthenticationHandle, data: string): Promise<Base64UrlString> {
         return this.channel.send(new Request(new Command(
             Method.Continue,
             JSON.stringify({ Handle: handle, Data: data}),
@@ -94,7 +94,7 @@ export class WindowsAuthClient
     }
 
     /** Used internally. Do not call this method. */
-    public term(handle: number): Promise<void> {
+    public term(handle: AuthenticationHandle): Promise<void> {
         return this.channel.send(new Request(new Command(
             Method.Term,
             JSON.stringify({ Handle: handle }),

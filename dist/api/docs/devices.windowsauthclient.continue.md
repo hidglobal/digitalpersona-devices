@@ -9,14 +9,14 @@ Used internally. Do not call this method.
 <b>Signature:</b>
 
 ```typescript
-continue(handle: number, data: string): Promise<Base64UrlString>;
+continue(handle: AuthenticationHandle, data: string): Promise<Base64UrlString>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | <code>number</code> |  |
+|  handle | <code>AuthenticationHandle</code> |  |
 |  data | <code>string</code> |  |
 
 <b>Returns:</b>

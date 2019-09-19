@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { Base64Url, Utf8 } from '@digitalpersona/core';
 import { MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
@@ -12,7 +12,7 @@ import { Method, NotificationType } from './messages';
  * The fingerprint reader API uses DigitalPersona WebSDK to communicate with fingerprint reader drivers and hardware.
  */
 var FingerprintReader = /** @class */ (function (_super) {
-    tslib_1.__extends(FingerprintReader, _super);
+    __extends(FingerprintReader, _super);
     /**
      * Constructs a new fingerprint reader API object.
      * @param options - options for the `WebSdk` channel.

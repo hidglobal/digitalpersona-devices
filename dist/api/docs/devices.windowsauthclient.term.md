@@ -9,14 +9,14 @@ Used internally. Do not call this method.
 <b>Signature:</b>
 
 ```typescript
-term(handle: number): Promise<void>;
+term(handle: AuthenticationHandle): Promise<void>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | <code>number</code> |  |
+|  handle | <code>AuthenticationHandle</code> |  |
 
 <b>Returns:</b>
 

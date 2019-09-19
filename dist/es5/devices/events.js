@@ -1,8 +1,8 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { Event } from '../common';
 /** A base class for device events.  */
 var DeviceEvent = /** @class */ (function (_super) {
-    tslib_1.__extends(DeviceEvent, _super);
+    __extends(DeviceEvent, _super);
     /** Constructs a new event.
      * @param type - an event type
      * @param deviceId - a device ID.
@@ -17,7 +17,7 @@ var DeviceEvent = /** @class */ (function (_super) {
 export { DeviceEvent };
 /** An event signaling that a device was connected. */
 var DeviceConnected = /** @class */ (function (_super) {
-    tslib_1.__extends(DeviceConnected, _super);
+    __extends(DeviceConnected, _super);
     /** Constructs a new event.
      * @param deviceId - a device ID.
      */
@@ -29,7 +29,7 @@ var DeviceConnected = /** @class */ (function (_super) {
 export { DeviceConnected };
 /** An event signaling that a device was disconnected. */
 var DeviceDisconnected = /** @class */ (function (_super) {
-    tslib_1.__extends(DeviceDisconnected, _super);
+    __extends(DeviceDisconnected, _super);
     /** Constructs a new event.
      * @param deviceId - a device ID.
      */

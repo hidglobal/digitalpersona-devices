@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
 import { CommunicationFailed } from '../../common';
@@ -11,7 +11,7 @@ import { Method } from './messages';
  * Windows account data for authentication.
  */
 var WindowsAuthClient = /** @class */ (function (_super) {
-    tslib_1.__extends(WindowsAuthClient, _super);
+    __extends(WindowsAuthClient, _super);
     /**
      * Constructs a new IWA API object.
      * @param options - options for the `WebSdk` channel.

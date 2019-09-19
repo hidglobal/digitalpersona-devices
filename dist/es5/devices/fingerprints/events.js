@@ -1,8 +1,8 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { DeviceEvent } from '../events';
 /** An event signaling that a new fingerprint sample (or samples) was acquired during a scan. */
 var SamplesAcquired = /** @class */ (function (_super) {
-    tslib_1.__extends(SamplesAcquired, _super);
+    __extends(SamplesAcquired, _super);
     /** Constructs a new event object.
      * @param deviceUid - a fingerprint reader ID.
      * @param sampleFormat - a fingerprint sample format.
@@ -19,7 +19,7 @@ var SamplesAcquired = /** @class */ (function (_super) {
 export { SamplesAcquired };
 /** An event reporting a quality of a fingerprint scan. */
 var QualityReported = /** @class */ (function (_super) {
-    tslib_1.__extends(QualityReported, _super);
+    __extends(QualityReported, _super);
     /** Constructs a new event object.
      * @param deviceUid - a fingerprint reader ID.
      * @param quality - a fingerprint scan quality.
@@ -34,7 +34,7 @@ var QualityReported = /** @class */ (function (_super) {
 export { QualityReported };
 /** An event reporting a fingerprint reader error.  */
 var ErrorOccurred = /** @class */ (function (_super) {
-    tslib_1.__extends(ErrorOccurred, _super);
+    __extends(ErrorOccurred, _super);
     /** Constructs a new event object.
      * @param deviceUid - a fingeprint reader ID.
      * @param error - an error code.
@@ -49,7 +49,7 @@ var ErrorOccurred = /** @class */ (function (_super) {
 export { ErrorOccurred };
 /** An event signaling that a fingerprint reader is ready and waiting to scan a finger. */
 var AcquisitionStarted = /** @class */ (function (_super) {
-    tslib_1.__extends(AcquisitionStarted, _super);
+    __extends(AcquisitionStarted, _super);
     /** Constructs a new event object.
      * @param deviceUid - a fingeprint reader ID.
      */
@@ -61,7 +61,7 @@ var AcquisitionStarted = /** @class */ (function (_super) {
 export { AcquisitionStarted };
 /** An event signaling that a fingerprint reader has stopped waiting for a finger scan. */
 var AcquisitionStopped = /** @class */ (function (_super) {
-    tslib_1.__extends(AcquisitionStopped, _super);
+    __extends(AcquisitionStopped, _super);
     /** Constructs a new event object.
      * @param deviceUid - a fingeprint reader ID.
      */

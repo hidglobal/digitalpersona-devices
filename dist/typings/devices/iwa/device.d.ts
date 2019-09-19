@@ -1,6 +1,6 @@
 /// <reference types="WebSdk" />
 import { Base64UrlString } from '@digitalpersona/core';
-import { AuthenticationData, IAuthenticationClient } from '@digitalpersona/services';
+import { AuthenticationData, IAuthenticationClient, AuthenticationHandle } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
 import { CommunicationFailed } from '../../common';
 /**
@@ -58,9 +58,9 @@ export declare class WindowsAuthClient extends MultiCastEventSource implements I
     /** Used internally. Do not call this method. */
     init(): Promise<AuthenticationData>;
     /** Used internally. Do not call this method. */
-    continue(handle: number, data: string): Promise<Base64UrlString>;
+    continue(handle: AuthenticationHandle, data: string): Promise<Base64UrlString>;
     /** Used internally. Do not call this method. */
-    term(handle: number): Promise<void>;
+    term(handle: AuthenticationHandle): Promise<void>;
     /** Converts WebSdk connectivity error to an IWA API event. */
     private onConnectionFailed;
 }

@@ -5,6 +5,7 @@
 ```ts
 
 import { AuthenticationData } from '@digitalpersona/services';
+import { AuthenticationHandle } from '@digitalpersona/services';
 import { Base64UrlString } from '@digitalpersona/core';
 import { BioSample } from '@digitalpersona/core';
 import { IAuthenticationClient } from '@digitalpersona/services';
@@ -217,7 +218,7 @@ export interface IWAData {
     // (undocumented)
     Data: string;
     // (undocumented)
-    Handle: number;
+    Handle: AuthenticationHandle;
 }
 
 // @public
@@ -298,12 +299,12 @@ export class SamplesAcquired extends DeviceEvent {
 // @public
 export class WindowsAuthClient extends MultiCastEventSource implements IAuthenticationClient {
     constructor(options?: WebSdk.WebChannelOptions);
-    continue(handle: number, data: string): Promise<Base64UrlString>;
+    continue(handle: AuthenticationHandle, data: string): Promise<Base64UrlString>;
     init(): Promise<AuthenticationData>;
     off<E extends Event>(event?: string, handler?: Handler<E>): this;
     on<E extends Event>(event: string, handler: Handler<E>): Handler<E>;
     onCommunicationFailed: Handler<CommunicationFailed>;
-    term(handle: number): Promise<void>;
+    term(handle: AuthenticationHandle): Promise<void>;
 }
 
 

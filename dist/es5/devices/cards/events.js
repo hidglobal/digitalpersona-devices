@@ -1,10 +1,10 @@
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { DeviceEvent } from '../events';
 /**
  * An event signaling that a card was presented (inserted or touched) to a card reader.
  */
 var CardInserted = /** @class */ (function (_super) {
-    tslib_1.__extends(CardInserted, _super);
+    __extends(CardInserted, _super);
     /** Contructs a new event object.
      * @param reader - a name of a card reader where the card was presented.
      * @param card - a name of a card presented.
@@ -19,7 +19,7 @@ var CardInserted = /** @class */ (function (_super) {
 export { CardInserted };
 /** An event signaling that a card was removed from a card reader. */
 var CardRemoved = /** @class */ (function (_super) {
-    tslib_1.__extends(CardRemoved, _super);
+    __extends(CardRemoved, _super);
     /** Contructs a new event object.
      * @param reader - a name of a card reader where the card was presented.
      * @param card - a name of a card presented.

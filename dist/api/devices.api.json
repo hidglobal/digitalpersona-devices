@@ -5013,8 +5013,8 @@
                   "text": ": "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "AuthenticationHandle"
                 },
                 {
                   "kind": "Content",
@@ -5442,8 +5442,8 @@
                   "text": ": "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "AuthenticationHandle"
                 },
                 {
                   "kind": "Content",
