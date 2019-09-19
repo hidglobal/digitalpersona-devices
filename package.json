@@ -1,8 +1,10 @@
 {
   "name": "@digitalpersona/devices",
   "globalObject": "dp.devices",
-  "version": "0.2.3",
-  "os": [ "win32" ],
+  "version": "0.2.4",
+  "os": [
+    "win32"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hidglobal/digitalpersona-devices"
@@ -35,7 +37,7 @@
   "typings": "./dist/typings/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "npm run clean && npm run tsc-all && npm run rollup",
+    "build": "npm run clean && npm run tsc-all && npm run rollup && npm run api && npm run api-doc",
     "tsc": "tsc",
     "tsc-es5": "tsc --p ./build/tsconfig/tsconfig.es5.json",
     "tsc-es6": "tsc --p ./build/tsconfig/tsconfig.es6.json",
@@ -50,7 +52,7 @@
     "api": "npx api-extractor run --local --verbose",
     "api-doc": "npx api-documenter markdown -i ./dist/api -o ./dist/api/docs",
     "api-all": "tsc && npm run api && npm run api-doc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && npm run test-once"
   },
   "dependencies": {
     "@digitalpersona/core": "^0.2",
@@ -59,8 +61,8 @@
   },
   "devDependencies": {
     "@types/jasmine": "^3.3",
-    "@types/node": "^11.12",
-    "jasmine": "^3.3",
+    "@types/node": "^12.0",
+    "jasmine": "^3.4",
     "jasmine-core": "^3.3",
     "karma": "^4.0",
     "karma-chrome-launcher": "^2.2",
@@ -72,12 +74,9 @@
     "rollup": "^1.6",
     "rollup-plugin-node-resolve": "^4.0",
     "rollup-plugin-terser": "^4.0",
-    "rollup-plugin-typescript2": "^0.20",
+    "rollup-plugin-typescript2": "^0.21",
     "terser": "^3.17",
     "tslint": "^5.14",
     "typescript": "^3.4"
-  },
-  "resolutions": {
-    "lodash": "^4.17.13"
   }
 }
