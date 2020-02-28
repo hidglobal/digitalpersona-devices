@@ -9,7 +9,7 @@ The library is licensed under the [MIT](./LICENSE) license. Copyright (c) 2019 H
 
 ## Documentation and Usage
 
-See the [project website](https://hidglobal.github.io/digitalpersona-core)
+See the [project website](https://hidglobal.github.io/digitalpersona-devices)
 
 ## Housekeeping
 
