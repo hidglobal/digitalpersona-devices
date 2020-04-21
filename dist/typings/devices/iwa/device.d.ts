@@ -2,7 +2,7 @@
 import { Base64UrlString } from '@digitalpersona/core';
 import { AuthenticationData, IAuthenticationClient, AuthenticationHandle } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
-import { CommunicationFailed } from '../../common';
+import { Event, CommunicationFailed } from '../../common';
 /**
  * Integrated Windows Authentication API.
  * An instance of this class allows internet browsers to authenticate in DigitalPersona servers

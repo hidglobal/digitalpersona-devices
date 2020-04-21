@@ -2,7 +2,7 @@
 import { AuthenticationData, IAuthenticationClient, AuthenticationHandle } from '@digitalpersona/services';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
-import { CommunicationEventSource, CommunicationFailed  } from '../../common';
+import { Event, CommunicationEventSource, CommunicationFailed } from '../../common';
 import { Method } from './messages';
 import { IWAData } from './data';
 

@@ -1,7 +1,7 @@
 ﻿import { Base64Url, Utf8 } from '@digitalpersona/core';
 import { Handler, MultiCastEventSource } from '../../private';
 import { Command, Request, Channel } from '../websdk';
-import { CommunicationFailed, CommunicationEventSource } from '../../common';
+import { Event, CommunicationFailed, CommunicationEventSource } from '../../common';
 import { DeviceConnected, DeviceDisconnected, DeviceEventSource } from '../events';
 import { ErrorOccurred,
     SamplesAcquired, QualityReported,

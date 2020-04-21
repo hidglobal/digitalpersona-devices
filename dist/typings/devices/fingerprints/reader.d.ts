@@ -1,6 +1,6 @@
 /// <reference types="WebSdk" />
 import { Handler, MultiCastEventSource } from '../../private';
-import { CommunicationFailed } from '../../common';
+import { Event, CommunicationFailed } from '../../common';
 import { DeviceConnected, DeviceDisconnected } from '../events';
 import { ErrorOccurred, SamplesAcquired, QualityReported, AcquisitionStarted, AcquisitionStopped } from './events';
 import { DeviceInfo } from './device';
