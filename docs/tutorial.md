@@ -24,6 +24,27 @@ Using Yarn:
 yarn add {{site.data.lib.package}}
 ```
 
+### Add a DigitalPersona WebSdk JavaScript library
+
+The WebSdk should be added to your web site, and a reference to it should be added into your HTML page:
+
+`index.html:`
+```html
+<script src="modules/websdk/index.js"></script>
+```
+NOTE: The WebSdk library can be obtained either with the [HID DigitalPersona Suite](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona),
+HID DigitalPersona SDK, or copied [from our sample](https://github.com/hidglobal/digitalpersona-sample-angularjs/tree/2c54be9c09434bdac39298162e4e6ff7316038c7/src/modules/WebSdk)
+
+NOTE: The WebSkd library requires DigitalPersona Agent running on a client machine. This agent provides a secure communication channel between a browser and a fingerprint or card device driver. The DigitalPersona Agent is a part of a HID DigitalPersona Workstation. It can be also installed with a DigitalPersona Lite Client. If you expect your users do not use HID DigitalPersona Workstation, you may need to provide your users with [a link to the Lite Client download](https://www.crossmatch.com/AltusFiles/AltusLite/digitalPersonaClient.Setup64.exe), which you should show on a reader communication error:
+
+```html
+<div class="reader-communication-error">
+    Cannot connect to you fingerprint device. Make sure the device is connected.
+    If you do not use DigitalPersona Workstation, you may need to download and install
+    <a href="https://www.crossmatch.com/AltusFiles/AltusLite/digitalPersonaClient.Setup64.exe">DigitalPersona Lite Client</a>.
+</div>
+```
+
 ### Write some code
 
 We recommend using Typescrypt or ES6 modules.
@@ -39,6 +60,10 @@ sample application.
 Import needed types from the @digitalpersona/devices module, for example:
 
 ```
+// NOTE: make sure you import only WebSdk typings here, not a WebSdk code!
+// Also make sure this is not a NodeJS module. WebSdk is a browser-only library!
+import './modules/WebSdk';
+
 import { FingerprintReader, SampleFormat } from '@digitalpersona/devices';
 ...
 
@@ -135,6 +160,10 @@ class FingerprintSigninControl
 Import needed types from the @digitalpersona/devices module, for example:
 
 ```
+// NOTE: make sure you import only WebSdk typings here, not a WebSdk code!
+// Also make sure this is not a NodeJS module. WebSdk is a browser-only library!
+import './modules/WebSdk';
+
 import { CardsReader } from '@digitalpersona/devices';
 ...
 
