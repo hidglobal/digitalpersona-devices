@@ -4,7 +4,7 @@
 export enum SampleFormat {
     /** A raw fingerprint image (bitmap). */
     Raw = 1,
-    /** A fingerprint image encoded into an intermediate format. */
+    /** A fingerprint feature set in a DigitalPersona proprietary format. To use with DigitalPersona fingerprint matching engine only. */
     Intermediate = 2,
     /** A compressed fingerprint image (e.q. JPEG2000, WSQ). */
     Compressed = 3,
