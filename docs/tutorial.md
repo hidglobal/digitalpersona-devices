@@ -35,13 +35,13 @@ The WebSdk should be added to your web site, and a reference to it should be add
 NOTE: The WebSdk library can be obtained either with the [HID DigitalPersona Suite](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona),
 HID DigitalPersona SDK, or copied [from our sample](https://github.com/hidglobal/digitalpersona-sample-angularjs/tree/2c54be9c09434bdac39298162e4e6ff7316038c7/src/modules/WebSdk)
 
-NOTE: The WebSkd library requires DigitalPersona Agent running on a client machine. This agent provides a secure communication channel between a browser and a fingerprint or card device driver. The DigitalPersona Agent is a part of a HID DigitalPersona Workstation. It can be also installed with a DigitalPersona Lite Client. If you expect your users do not use HID DigitalPersona Workstation, you may need to provide your users with [a link to the Lite Client download](https://www.crossmatch.com/AltusFiles/AltusLite/digitalPersonaClient.Setup64.exe), which you should show on a reader communication error:
+NOTE: The WebSkd library requires DigitalPersona Agent running on a client machine. This agent provides a secure communication channel between a browser and a fingerprint or card device driver. The DigitalPersona Agent is a part of a HID DigitalPersona Workstation. It can be also installed with a DigitalPersona Lite Client. If you expect your users do not use HID DigitalPersona Workstation, you may need to provide your users with [a link to the Lite Client download]({{site.data.product.liteClientUrl}}), which you should show on a reader communication error:
 
 ```html
 <div class="reader-communication-error">
     Cannot connect to you fingerprint device. Make sure the device is connected.
     If you do not use DigitalPersona Workstation, you may need to download and install
-    <a href="https://www.crossmatch.com/AltusFiles/AltusLite/digitalPersonaClient.Setup64.exe">DigitalPersona Lite Client</a>.
+    <a href="{{site.data.product.liteClientUrl}}">DigitalPersona Lite Client</a>.
 </div>
 ```
 
