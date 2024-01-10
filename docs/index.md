@@ -22,22 +22,22 @@ channel is provided by DigitalPersona WebSDK agent.
 
 The library requires:
 * a HID DigitalPersona WebSdk JavaScript library loaded into the browser.
-* a [HID DigitalPersona Workstation](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona)
-**or** [HID DigitalPersona Lite Client](https://www.crossmatch.com/AltusFiles/AltusLite/digitalPersonaClient.Setup64.exe)
+* a [HID DigitalPersona Workstation]({{ site.data.product.digitalPersonaUrl} })
+**or** [HID DigitalPersona Lite Client]({{ site.data.product.liteClientUrl }})
 installed on the local machine.
 
 The DigitalPersona Workstation provides a local Windows service and a user agent
 which communicate with the hardware and provide a secure messaging channel for Javascript running 
 in a browser. The DigitalPersona WebSdk is a browser's end of this channel.
 
-NOTE: Currently WebSdk is provided either with the [HID DigitalPersona Suite](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona),
+NOTE: Currently WebSdk is provided either with the [HID DigitalPersona Suite]({{ site.data.product.digitalPersonaUrl }}),
 or can be downloaded separately from [the sample](https://github.com/hidglobal/digitalpersona-sample-angularjs/tree/2c54be9c09434bdac39298162e4e6ff7316038c7/src/modules/WebSdk).
 
 DEVELOPERS NOTE: Make sure you add the WebSdk library code into your web page only,
 [using a `script` tag](https://github.com/hidglobal/digitalpersona-sample-angularjs/blob/2c54be9c09434bdac39298162e4e6ff7316038c7/src/index.html#L31).
 A common mistake is to import the WebSdk code into your JS. You [can do `import`](https://github.com/hidglobal/digitalpersona-sample-angularjs/blob/2c54be9c09434bdac39298162e4e6ff7316038c7/src/index.ts#L11) only for typings.
 
-To process fingerprint samples acquired using the `@digitalpersona/devices` (for enrollment and authentication), you should either use [HID DigitalPersona Authentication Server](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona) together with `@digitalpersona/enrollment` and `@digitalpersona/authentication` libraries, or use your own fingerprint matching engine. Fingerprint samples are compatible with ANSI/ISO fingerprint template standards.
+To process fingerprint samples acquired using the `@digitalpersona/devices` (for enrollment and authentication), you should either use [HID DigitalPersona Authentication Server]({{site.data.product.digitalPersonaUrl}}) together with `@digitalpersona/enrollment` and `@digitalpersona/authentication` libraries, or use your own fingerprint matching engine. Fingerprint samples are compatible with ANSI/ISO fingerprint template standards.
 
 ## Requirements
 
