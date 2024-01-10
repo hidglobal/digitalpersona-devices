@@ -22,7 +22,7 @@ channel is provided by DigitalPersona WebSDK agent.
 
 The library requires:
 * a HID DigitalPersona WebSdk JavaScript library loaded into the browser.
-* a [HID DigitalPersona Workstation]({{ site.data.product.digitalPersonaUrl} })
+* a [HID DigitalPersona Workstation]({{ site.data.product.digitalPersonaUrl }})
 **or** [HID DigitalPersona Lite Client]({{ site.data.product.liteClientUrl }})
 installed on the local machine.
 
