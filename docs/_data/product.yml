@@ -3,5 +3,6 @@ shortName: DPAM
 repo: digitalpersona-access-management-api
 git: 'https://github.com/hidglobal'
 npm: 'https://www.npmjs.com/package'
+hidCustomerServiceUrl: 'https://support.hidglobal.com/customer-service?utm_source=github.com/hidglobal/digitalpersona-devices'
 digitalPersonaUrl: 'https://www.hidglobal.com/products/software/digitalpersona/digitalpersona?utm_source=github.com/hidglobal/digitalpersona-devices'
 liteClientUrl: 'https://crossmatch.hid.gl/lite-client'
