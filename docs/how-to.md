@@ -32,15 +32,15 @@ It is a bad practice to run fingerprint matching in a browser, because browsers 
 
 This library runs in a browser and performs only fingerprint capturing. It does not do any fingerprint matching, see the previuos answer to understand why.
 
-For fingerprint matching, you need to use some proven and certified fingerprint matching engine, like `FingerJet` (can be obtained with DigitalPersona U-are-U SDK or as a part of the [DigitalPersona Authentication Server](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona?utm_source=github.com/hidglobal/digitalpersona-devices)) or similar. 
+For fingerprint matching, you need to use some proven and certified fingerprint matching engine, like `FingerJet` (can be obtained with DigitalPersona U-are-U SDK or as a part of the [DigitalPersona Authentication Server]({{site.data.product.digitalPersonaUrl}})) or similar. 
 
 ## I need a code for fingerprint matching, using NodeJS/ASP.NET/Python/{{other language}}
 
 It is a bad security practice to implement your own fingerprint matching engine, unless you do it for study or research. Fingerprint matching engines use hard math, proprietary algorithms, and they are resource-demanding, so they are usually implemented in some native language "closer to the metal" (C, C++ etc), Best engines are certified by NIST or other trusted agency.
 
-Again, we suggest to use some proven and certified fingerprint matching engine like `FingerJet` (part of [HID DigitalPersona](https://www.hidglobal.com/products/software/digitalpersona/digitalpersona?utm_source=github.com/hidglobal/digitalpersona-devices) products) or similar.
+Again, we suggest to use some proven and certified fingerprint matching engine like `FingerJet` (part of [HID DigitalPersona]({{site.data.product.digitalPersonaUrl}}) products) or similar.
 
-If you're not DigitalPersona customer yet, then please contact [HID Global](https://support.hidglobal.com/customer-service?utm_source=github.com/hidglobal/digitalpersona-devices) sales team.
+If you're not DigitalPersona customer yet, then please contact [HID Global]({{site.data.product.hidCustomerServiceUrl}}) sales team.
 
 ## I want my own solution for fingerprint matching
 
