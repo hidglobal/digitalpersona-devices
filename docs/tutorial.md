@@ -33,7 +33,7 @@ The WebSdk should be added to your web site, and a reference to it should be add
 <script src="modules/websdk/index.js"></script>
 ```
 NOTE: The WebSdk library can be obtained either with the [HID DigitalPersona Suite]({{site.data.product.digitalPersonaUrl}}),
-HID DigitalPersona SDK, or copied [from our sample](https://github.com/hidglobal/digitalpersona-sample-angularjs/tree/master/src/modules/WebSdk)
+HID DigitalPersona SDK, or copied [from our sample]({{ site.data.product.sampleRepoBaseUrl }}/src/modules/WebSdk)
 
 NOTE: The WebSkd library requires DigitalPersona Agent running on a client machine. This agent provides a secure communication channel between a browser and a fingerprint or card device driver. The DigitalPersona Agent is a part of a HID DigitalPersona Workstation. It can be also installed with a DigitalPersona Lite Client. If you expect your users do not use HID DigitalPersona Workstation, you may need to provide your users with [a link to the Lite Client download]({{site.data.product.liteClientUrl}}), which you should show on a reader communication error:
 
