@@ -22,7 +22,7 @@ The `@digitalpersona/devices` library is a *browser-only* library, it cannot be 
 
 Make sure you load both the `@digitalpersona/devices` **and** the  [`WebSdk`](https://github.com/hidglobal/digitalpersona-devices/tree/master/%40types/WebSdk) modules into the web page using regular `<script>` tags.
 
-If you use a bundler like Webpack, make sure you [configured it](https://github.com/hidglobal/digitalpersona-sample-angularjs/blob/master/build/webpack/prod.js) so that WebSdk is loaded as an "external" (or "global") module, and that the `@digitalpersona/devices` is also makes its way into the browser bundle, but not into the server-side NodeJS code.
+If you use a bundler like Webpack, make sure you [configured it]({{ site.data.product.sampleRepoBaseUrl }}/build/webpack/prod.js) so that WebSdk is loaded as an "external" (or "global") module, and that the `@digitalpersona/devices` is also makes its way into the browser bundle, but not into the server-side NodeJS code.
 
 ## How to match collected fingerprints in a browser?
 
