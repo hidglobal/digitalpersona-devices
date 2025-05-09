@@ -5,8 +5,8 @@ smartcard readers etc) using a DigitalPersona local device access API.
 
 > [!NOTE]
 > Consider using smaller and more targeted packages:
-> * `@digitalpersona\fingerprint` (supports only fingerprints only) and/or to
-> * `@digitalpersona\card` (supports only cards).
+> * [`@digitalpersona\fingerprint`](https://github.com/hidglobal/digitalpersona-fingerprint) -- supports only fingerprints only, and/or to
+> * [`@digitalpersona\card`](https://github.com/hidglobal/digitalpersona-card) -- supports only cards
 >
 > The `@digitalpersona\devices` may be declared obsolete in near future, and everyone will be encouraged to use those smaller and more targeted packages instead.
 
